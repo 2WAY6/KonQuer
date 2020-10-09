@@ -6,7 +6,7 @@ import numpy as np
 
 from .geometry import dist_2d, segments_intersect_jit, line_intersection, point_in_element
 from .plotting import plot_ortho_flows
-# import cython_geometry as cy_geo 
+import cython_geometry as cy_geo
 
 
 def run_kq(nodes, elements, node_elmt_link, edges, node_edge_link, kqs_dict, kq_ids, path_depth, path_veloc, path_erg,
@@ -367,7 +367,8 @@ def check_intersection(kq, edge, nodes):
     segment_edge = np.array([nd0[0:2], nd1[0:2]])
     segment_kq = kq
 
-    if segments_intersect_jit(segment_edge, segment_kq):
+    # if segments_intersect_jit(segment_edge, segment_kq):
+    if cy_geo.segments_intersect(segment_edge[0], segment_edge[1], segment_kq[0], segment_kq[1]):
         I = line_intersection(segment_edge, segment_kq)
         return I
 
