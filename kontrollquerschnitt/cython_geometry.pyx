@@ -8,7 +8,8 @@ from  libc.math cimport fmin, fmax
 @boundscheck(False)
 @wraparound(False)
 cdef double det_2d(double[:] A, double[:] B):
-    return A[0] * B[1] - A[1] * B[0]
+    cdef double det = A[0] * B[1] - A[1] * B[0]
+    return det
 
 
 # Check, if three 2d points are in a counter clockwise order

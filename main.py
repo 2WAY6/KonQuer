@@ -32,18 +32,6 @@ from kontrollquerschnitt.plotting import plot_kqs
 
 
 def main():
-    # folder = r"e:\Temp\kq\tmp"
-    # path_mesh = os.path.join(folder, "system.dat")
-    # path_depth = None
-    # path_veloc = None
-    # path_erg = os.path.join(folder, "ergqh.bin")
-    # path_shp = os.path.join(folder, "Kontrollquerschnitte_Selektion_out.shp")
-    # field_id = "Node"
-    # ts0 = 0
-    # ts1 = 50000
-    # modulo = 1
-    # plot = False
-
     t0_prog = time.time()
 
     path_mesh, path_shp, field_id, path_depth, path_veloc, path_erg, ts0, ts1, modulo, plot, ts_plot, save, prefix = parse_args()
@@ -77,7 +65,7 @@ def main():
     write_wel(path_wel, kq_timeseries_dict, timesteps)
 
     dt = time.time() - t0_prog
-    print("\nProgramm nach {:8.2f} Sekunden (= {:5.2f} Minuten beendet.".format(dt, dt/60))
+    print("\nProgramm nach {:8.2f} Sekunden bzw. {:5.2f} Minuten beendet.".format(dt, dt/60))
 
 
 def parse_args():

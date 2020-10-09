@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-from .geometry import dist_2d, segments_intersect_jit, line_intersection, point_in_element
+from .geometry import dist_2d, line_intersection, point_in_element
 from .plotting import plot_ortho_flows
 import cython_geometry as cy_geo
 
