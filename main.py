@@ -23,6 +23,7 @@ from scipy.spatial import KDTree
 from kontrollquerschnitt.inout import import_mesh, import_kontrollquerschnitte_from_shape, write_wel
 from kontrollquerschnitt.functions import run_kq
 from kontrollquerschnitt.plotting import plot_kqs
+from kontrollquerschnitt.classes import Mesh
 
 
 # TODO: improve speed (cython)
@@ -50,6 +51,14 @@ def main():
 
 
     print("\nErmittle {} Kontrollquerschnitte...".format(len(kqs_dict)))
+    params = {
+        'nodes': nodes,
+        'elements': elements,
+        'node_elmt_link': node_elmt_link,
+        'edges': edges,
+        'node_edge_link': node_edge_link
+        }
+    
     kq_timeseries_dict, timesteps = run_kq(nodes, elements, node_elmt_link, edges, node_edge_link, kqs_dict, kq_ids,
                                            path_depth, path_veloc, path_erg, ts0, ts1, modulo, kdtree, ts_plot)
 

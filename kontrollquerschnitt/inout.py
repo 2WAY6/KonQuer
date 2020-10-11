@@ -5,6 +5,8 @@ import time
 import numpy as np
 import shapefile
 
+from kontrollquerschnitt.classes import Mesh
+
 
 def import_2dm_mesh(path_mesh):
     print("- Lese 2dm-Mesh...")
@@ -97,6 +99,8 @@ def import_mesh(path_mesh):
     for nid, eids in enumerate(node_elmt_link):
         node_elmt_link[nid] = list(set(eids))
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
+
+    mesh = 
 
     return nodes_array, elements, node_elmt_link, edges, node_edge_link
 
