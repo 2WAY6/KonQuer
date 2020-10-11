@@ -20,7 +20,7 @@ import time
 import numpy as np
 from scipy.spatial import KDTree
 
-from kontrollquerschnitt.inout import import_mesh, import_kontrollquerschnitte_from_shape, write_wel
+from kontrollquerschnitt.inout import import_mesh, import_kqs_from_shape, write_wel
 from kontrollquerschnitt.functions import run_kq
 from kontrollquerschnitt.plotting import plot_kqs
 from kontrollquerschnitt.classes import Mesh
@@ -35,40 +35,31 @@ from kontrollquerschnitt.classes import Mesh
 def main():
     t0_prog = time.time()
 
-    path_mesh, path_shp, field_id, path_depth, path_veloc, path_erg, ts0, ts1, modulo, plot, ts_plot, save, prefix = parse_args()
+    path_dict, field_name, ts0, ts1, modulo, plot, ts_plot, save, prefix = parse_args()
 
-    if path_depth is None and path_veloc is None and path_erg is None:
+    if (path_dict['depth'] is None and path_dict['veloc'] is None
+            and path_dict['erg'] is None):
         sys.exit("\nKeine Ergebnisdaten angegeben. Programmabbruch.")
 
     print("\nImportiere Eingangsdaten...")
-    kqs_dict, kq_ids = import_kontrollquerschnitte_from_shape(path_shp, field_id=field_id)
-    nodes, elements, node_elmt_link, edges, node_edge_link = import_mesh(path_mesh)
+    kqs_dict = import_kqs_from_shape(path_dict['shp'], field_name=field_name)
+    mesh = import_mesh(path_dict['mesh'])
 
     print("\nBaue raeumliche Suchstruktur...")
     t0 = time.time()
-    kdtree = KDTree(nodes[:,0:2])
+    kdtree = KDTree(mesh.nodes_array[:, 0:2])
     print("-> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
-
     print("\nErmittle {} Kontrollquerschnitte...".format(len(kqs_dict)))
-    params = {
-        'nodes': nodes,
-        'elements': elements,
-        'node_elmt_link': node_elmt_link,
-        'edges': edges,
-        'node_edge_link': node_edge_link
-        }
-    
-    kq_timeseries_dict, timesteps = run_kq(nodes, elements, node_elmt_link, edges, node_edge_link, kqs_dict, kq_ids,
-                                           path_depth, path_veloc, path_erg, ts0, ts1, modulo, kdtree, ts_plot)
+    kq_timeseries_dict, timesteps = run_kq(mesh, kqs_dict, path_dict, ts0, ts1, modulo, kdtree, ts_plot)
 
     if plot or save:
         print("\nPlotte Kontrollquerschnitte...")
         plot_kqs(kq_timeseries_dict, timesteps, plot=plot, saveplots=save, folder=os.path.dirname(path_shp), prefix=prefix)
 
-    path_wel = path_shp[:-4] + ".wel"
+    path_wel = path_dict['shp'][:-4] + ".wel"
     if prefix is not None:
-        path_wel = os.path.join(os.path.dirname(path_shp), prefix + "_" + os.path.basename(path_shp)[:-4] + ".wel")
+        path_wel = os.path.join(os.path.dirname(path_dict['shp']), prefix + "_" + os.path.basename(path_shp)[:-4] + ".wel")
 
     print("\nSchreibe Kontrollquerschnitte als {}...".format(os.path.basename(path_wel)))
     write_wel(path_wel, kq_timeseries_dict, timesteps)
@@ -119,7 +110,6 @@ def parse_args():
     else:
         path_shp = os.path.join(folder, args['shp'])
 
-
     if args['dat'] is not None:
         name_depth, name_veloc = [d for d in args['dat'].split(',')]
         if os.path.isabs(name_depth):
@@ -133,7 +123,6 @@ def parse_args():
     else:
         path_depth, path_veloc = None, None
 
-
     if args['erg'] is not None:
         if os.path.isabs(args['erg']):
             path_erg = args['erg']
@@ -141,7 +130,6 @@ def parse_args():
             path_erg = os.path.join(folder, args['erg'])
     else:
         path_erg = None
-
 
     ts0 = args['ts0']
     ts1 = args['ts1']
@@ -152,8 +140,10 @@ def parse_args():
     ts_plot = True if args['ts_plot'].upper() in ["TRUE", "JA", "1"] else False
     prefix = args['prefix']
 
-    return path_mesh, path_shp, field_id, path_depth, path_veloc, path_erg, ts0, ts1, modulo, plot, ts_plot, save, prefix
+    path_dict = {'mesh': path_mesh, 'shp': path_shp, 'erg': path_erg,
+                 'depth': path_depth, 'veloc': path_veloc}
+    return path_dict, field_id, ts0, ts1, modulo, plot, ts_plot, save, prefix
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()

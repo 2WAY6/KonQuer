@@ -5,7 +5,7 @@ import time
 import numpy as np
 import shapefile
 
-from kontrollquerschnitt.classes import Mesh
+from kontrollquerschnitt.classes import KontrollQuerschnitt, Mesh
 
 
 def import_2dm_mesh(path_mesh):
@@ -32,7 +32,7 @@ def import_2dm_mesh(path_mesh):
     edges = np.array([[int(edge.split()[0]), int(edge.split()[1])] for edge in list(set(edges))])
 
     nodes_array = np.zeros((len(nodes), 5))
-    nodes_array[:,(0,1,2)] = np.array(nodes)
+    nodes_array[:, (0, 1, 2)] = np.array(nodes)
 
     return nodes_array, edges, elements
 
@@ -100,34 +100,36 @@ def import_mesh(path_mesh):
         node_elmt_link[nid] = list(set(eids))
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
-    mesh = 
+    mesh = Mesh(nodes_array=nodes_array, elements=elements, edges=edges)
+    mesh.node_edge_link = node_edge_link
+    mesh.node_elmt_link = node_elmt_link
 
-    return nodes_array, elements, node_elmt_link, edges, node_edge_link
+    return mesh
 
 
-def import_kontrollquerschnitte_from_shape(path_shape, field_id=None):
+def import_kqs_from_shape(path_shape, field_name=None):
     print("- Importiere Kontrollquerschnitte...")
     sf = shapefile.Reader(path_shape)
     fields = [s[0] for s in sf.fields if s[0] != 'DeletionFlag']
 
-    kontrollquerschnitte = []
+    kq_list = []
     for i in range(0, len(sf.shapes())):
-        # kontrollquerschnitte.append(np.array([(pnt[0], pnt[1]) for pnt in sf.shape(i).points]))
-        p0 = (sf.shape(i).points[0][0], sf.shape(i).points[0][1])
-        p1 = (sf.shape(i).points[-1][0], sf.shape(i).points[-1][1])
-        kontrollquerschnitte.append(np.array([p0, p1]))
+        kq = KontrollQuerschnitt()
+        kq.from_lineshape(sf.shape(i))
+        kq_list.append(kq)
 
     kq_ids = []
     if field_id is not None:
         index_station = fields.index(field_id)
         for i, r in enumerate(sf.records()):
-            kq_ids.append(r[index_station])
+            kq_list[i].name = r[index_station]
     else:
-        kq_ids = [i for i in range(len(kontrollquerschnitte))]
+        for i in range(len(kq_list)):
+            kq_list[i].name = str(i)
 
-    kqs_dict = {kq_id: kq for kq_id, kq in zip(kq_ids, kontrollquerschnitte)}
+    kqs_dict = {kq_id: kq for kq_id, kq in zip(kq_ids, kq_list)}
 
-    return kqs_dict, kq_ids
+    return kqs_dict
 
 
 def write_csv(path_out_csv, kq_timeseries_dict):

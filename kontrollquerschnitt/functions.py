@@ -9,32 +9,32 @@ from .plotting import plot_ortho_flows
 import cython_geometry as cy_geo
 
 
-def run_kq(nodes, elements, node_elmt_link, edges, node_edge_link, kqs_dict, kq_ids, path_depth, path_veloc, path_erg,
+def run_kq(mesh, kqs_dict, path_dict,
            ts0, ts1, modulo, kdtree, plot=False):
     print("- Ermittle Schnittpunkte der Kontrollquerschnitte mit den Netzkanten...")
     t0 = time.time()
-    kq_edge_ids_dict, kq_intersection_dict = calc_kq_edge_intersection_dicts(nodes, edges, node_edge_link, kqs_dict, kdtree, kq_ids)
+    calc_kq_edge_intersections(mesh, kqs_dict, kdtree)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
     print("- Ermittle Element von Anfangs- und Endpunkte der Kontrollquerschnitte...")
     t0 = time.time()
-    kq_elmt_ids_dict = calc_kq_elmt_intersection_dicts(nodes, elements, node_elmt_link, kqs_dict, kdtree, kq_ids)
+    calc_kq_elmt_intersections(mesh, kqs_dict, kdtree)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
     if plot:
-        for kqid, kqintersections in kq_intersection_dict.items():
+        for kqid, kq in kqs_dict.items():
             print("\nSchnittpunkte mit Kanten von {}:".format(kqid))
-            for inter in kqintersections:
-                print("{}\t{}".format(round(inter[0],2), round(inter[1],2)))
+            for inter in kq.intersections:
+                print("{}\t{}".format(round(inter[0], 2), round(inter[1], 2)))
 
     print("- Ermittle Durchfluesse pro Kontrollquerschnitt je Zeitschritt...")
     t0 = time.time()
-    if path_depth is not None and path_veloc is not None:
+    if path_dict['depth'] is not None and path_dict['veloc'] is not None:
         kq_timeseries_dict, timesteps = calc_timeseries_dat(nodes, elements, edges, kdtree, kqs_dict, kq_ids,
                                                             path_depth, path_veloc, kq_edge_ids_dict,
                                                             kq_intersection_dict, kq_elmt_ids_dict, ts0, ts1, modulo,
                                                             plot)
-    elif path_erg is not None:
+    elif path_dict['erg'] is not None:
         kq_timeseries_dict, timesteps = calc_timeseries_erg(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_erg,
                                                             kq_edge_ids_dict, kq_intersection_dict, kq_elmt_ids_dict,
                                                             ts0, ts1, modulo, plot)
@@ -285,65 +285,53 @@ def get_barycentric_interpolation_weights(P, nodes):
     return [w1, w2, w3]
 
 
-
-def calc_kq_elmt_intersection_dicts(nodes, elements, node_elmt_link, kqs_dict, kdtree, kq_ids):
-    kq_elmt_ids_dict = {}
-
+def calc_kq_elmt_intersections(mesh, kqs_dict, kdtree):
     for kq_id, kq in kqs_dict.items():
-        kq_elmt_ids_dict[kq_id] = []
+        kq_pts = kq.to_numpy()
 
-        nid1 = kdtree.query(kq[0])[1]
-        nid2 = kdtree.query(kq[1])[1]
+        nid1 = kdtree.query(kq_pts[0])[1]
+        nid2 = kdtree.query(kq_pts[1])[1]
 
-        start_eid_candidates = node_elmt_link[nid1]
-        end_eid_candidates = node_elmt_link[nid2]
+        start_eid_candidates = mesh.node_elmt_link[nid1]
+        end_eid_candidates = mesh.node_elmt_link[nid2]
 
+        kqs_dict[kq_id].elmt_ids = []
         for eid in start_eid_candidates:
-            if point_in_element(kq[0], nodes[elements[eid]]):
-                kq_elmt_ids_dict[kq_id].append(eid)
+            if point_in_element(kq_pts[0], mesh.nodes[mesh.elements[eid]]):
+                kqs_dict[kq_id].elmt_ids.append(eid)
                 break
         for eid in end_eid_candidates:
-            if point_in_element(kq[1], nodes[elements[eid]]):
-                kq_elmt_ids_dict[kq_id].append(eid)
+            if point_in_element(kq_pts[1], mesh.nodes[mesh.elements[eid]]):
+                kqs_dict[kq_id].elmt_ids.append(eid)
                 break
-        a = 1
 
-        if len(kq_elmt_ids_dict[kq_id]) != 2:
+        if len(kqs_dict[kq_id].elmt_ids) != 2:
             print("Start- oder Endpunkt des Kontrollquerschnitts {} liegen nicht in einem Element.".format(kq_id))
             sys.exit("Programmabbruch")
 
-    return kq_elmt_ids_dict
 
-
-def calc_kq_edge_intersection_dicts(nodes, edges, node_edge_link, kqs_dict, kdtree, kq_ids):
-    kq_intersection_dict = {}
-    kq_edge_ids_dict = {}
-
+def calc_kq_edge_intersections(mesh, kqs_dict, kdtree):
     for kq_id, kq in kqs_dict.items():
-        radius = dist_2d(kq[0], kq[1])
-        center = ((kq[0, 0] + kq[1, 0]) / 2, (kq[0, 1] + kq[1, 1]) / 2)
+        kq_pts = kq.to_numpy()
+        radius = dist_2d(kq.pts[0], kq.pts[1])
+        center = ((kq_pts[0, 0] + kq_pts[1, 0]) / 2,
+                  (kq_pts[0, 1] + kq_pts[1, 1]) / 2)
         nd_indices = kdtree.query_ball_point([center[0], center[1]], radius)
 
-        edge_indices = [node_edge_link[ni] for ni in nd_indices]
+        edge_indices = [mesh.node_edge_link[ni] for ni in nd_indices]
         edge_indices = list(set([item for sublist in edge_indices for item in sublist]))
 
         kq_edge_ids = []
         kq_intersections = []
         for ei in edge_indices:
-            I = check_intersection(kq, edges[ei], nodes)
-            if I is not None:
-                # print("")
-                # print("Schnittpunkt: {}\t{}".format(round(I[0],2), round(I[1], 2)))
-                # node1 = nodes[edges[ei][0]]
-                # node2 = nodes[edges[ei][1]]
-                # print("Knoten 1 von Kante: {}\t{}".format(round(node1[0],2), round(node1[1], 2)))
-                # print("Knoten 2 von Kante: {}\t{}".format(round(node2[0],2), round(node2[1], 2)))
-                kq_intersections.append(I)
+            intersection = check_intersection(kq_pts, mesh.edges[ei], mesh.nodes)
+            if intersection is not None:
+                kq_intersections.append(intersection)
                 kq_edge_ids.append(ei)
 
         sorter = []
-        for icnt, I in enumerate(kq_intersections):
-            dx = dist_2d(kq[0], I)
+        for icnt, intersection in enumerate(kq_intersections):
+            dx = dist_2d(kq_pts[0], intersection)
             sorter.append([dx, icnt])
 
         sorter.sort(key=lambda sorter: sorter[0])
@@ -354,10 +342,8 @@ def calc_kq_edge_intersection_dicts(nodes, edges, node_edge_link, kqs_dict, kdtr
             ordered_kq_edge_ids.append(kq_edge_ids[s[1]])
             ordered_kq_intersections.append(kq_intersections[s[1]])
 
-        kq_intersection_dict[kq_id] = ordered_kq_intersections
-        kq_edge_ids_dict[kq_id] = ordered_kq_edge_ids
-
-    return kq_edge_ids_dict, kq_intersection_dict
+        kqs_dict[kq_id].intersections = ordered_kq_intersections
+        kqs_dict[kq_id].edge_ids = ordered_kq_edge_ids
 
 
 def check_intersection(kq, edge, nodes):
