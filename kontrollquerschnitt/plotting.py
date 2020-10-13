@@ -8,15 +8,18 @@ def plot_ortho_flows(intersections, ortho_flows, ts, summe, divisor=0.1):
 
     print("\nPlot Values:")
     for xy, fl in zip(intersections, ortho_flows):
-        print("{}\t{}\t{}".format(round(xy[0], 2), round(xy[1], 2), round(fl, 3)))
+        print("{}\t{}\t{}".format(round(xy[0], 2), round(xy[1], 2),
+                                  round(fl, 3)))
 
     i_xs = [inter[0] for inter in intersections]
     i_ys = [inter[1] for inter in intersections]
 
-    kq_dir = (intersections[-1][0] - intersections[0][0], intersections[-1][1] - intersections[0][1])
+    kq_dir = (intersections[-1][0] - intersections[0][0],
+              intersections[-1][1] - intersections[0][1])
     kq_ortho_dir = (-1 * kq_dir[1], kq_dir[0])
     kq_ortho_dir_mag = sqrt(kq_ortho_dir[0]**2 + kq_ortho_dir[1]**2)
-    kq_ortho_dir_norm = (kq_ortho_dir[0] / kq_ortho_dir_mag, kq_ortho_dir[1] / kq_ortho_dir_mag)
+    kq_ortho_dir_norm = (kq_ortho_dir[0] / kq_ortho_dir_mag,
+                         kq_ortho_dir[1] / kq_ortho_dir_mag)
 
     fig, ax = plt.subplots()
     ax.plot(i_xs, i_ys, 'bo-')
@@ -41,19 +44,19 @@ def plot_ortho_flows(intersections, ortho_flows, ts, summe, divisor=0.1):
     ax.axis('equal')
     plt.show()
 
-    # if ts > 30000:
-    #     plt.savefig("e:\\Temp\\klim\\Regen_2010_v8\\clip\\png\\" + "{:09}.png".format(int(ts)))
     plt.close()
 
 
-def plot_kqs(kq_timeseries_dict, timesteps, plot=True, saveplots=False, folder='', prefix=None): # TODO: Make plot saveable
+def plot_kqs(kq_timeseries_dict, timesteps, plot=True, saveplots=False,
+             folder='', prefix=None):  # TODO: Make plot saveable
     timesteps_hours = [ts/3600 for ts in timesteps]
 
     for kqid, kq_timeseries in kq_timeseries_dict.items():
         flows = [sum(flow) for flow in kq_timeseries]
         vols = [0]
         for i, flow in enumerate(flows[:-1]):
-            vol = (timesteps[i+1] - timesteps[i]) * (flows[i] + flows[i+1]) / 2 # Trapezintegration
+            vol = (timesteps[i+1] - timesteps[i]) * \
+                  (flows[i] + flows[i+1]) / 2  # Trapezintegration
             vols.append(vol + vols[-1])
 
         max_flow = 0
@@ -64,7 +67,6 @@ def plot_kqs(kq_timeseries_dict, timesteps, plot=True, saveplots=False, folder='
                 max_i = i
                 max_flow = f
         max_ts = timesteps_hours[max_i]
-
 
         fig, ax1 = plt.subplots()
         color = 'blue'

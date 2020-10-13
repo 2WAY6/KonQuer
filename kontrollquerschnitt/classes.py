@@ -6,11 +6,11 @@ class KontrollQuerschnitt:
         self.name = None
         self.p0 = None  # Start Point
         self.p1 = None  # End Point
-        self.elmt_ids = None  # Elements, where p0 and p1 are within
-        self.edge_ids = None  # Edges that are intersected
-        self.intersections = None
-        self.timesteps = None
-        self.flows = None
+        self.elmt_ids = []  # Elements, where p0 and p1 are within
+        self.edge_ids = []  # Edges that are intersected
+        self.intersections = []
+        self.timesteps = []
+        self.flows = []
 
     def to_numpy(self):
         return np.array([self.p0, self.p1])

@@ -9,14 +9,19 @@ from .plotting import plot_ortho_flows
 import cython_geometry as cy_geo
 
 
-def run_kq(mesh, kqs_dict, path_dict,
-           ts0, ts1, modulo, kdtree, plot=False):
-    print("- Ermittle Schnittpunkte der Kontrollquerschnitte mit den Netzkanten...")
+def run_kq(mesh, kqs_dict, path_dict, kdtree, params, plot=False):
+    ts0 = params['ts0']
+    ts1 = params['ts1']
+    modulo = params['modulo']
+
+    print("- Ermittle Schnittpunkte der Kontrollquerschnitte mit den "
+          "Netzkanten...")
     t0 = time.time()
     calc_kq_edge_intersections(mesh, kqs_dict, kdtree)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
-    print("- Ermittle Element von Anfangs- und Endpunkte der Kontrollquerschnitte...")
+    print("- Ermittle Element von Anfangs- und Endpunkte der "
+          "Kontrollquerschnitte...")
     t0 = time.time()
     calc_kq_elmt_intersections(mesh, kqs_dict, kdtree)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
@@ -30,25 +35,25 @@ def run_kq(mesh, kqs_dict, path_dict,
     print("- Ermittle Durchfluesse pro Kontrollquerschnitt je Zeitschritt...")
     t0 = time.time()
     if path_dict['depth'] is not None and path_dict['veloc'] is not None:
-        calc_timeseries_dat(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, 
-                            modulo, plot)
+        calc_timeseries_dat(mesh, kqs_dict, path_dict, ts0, ts1, modulo, plot)
     elif path_dict['erg'] is not None:
-        calc_timeseries_erg(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, 
-                            modulo, plot)
+        calc_timeseries_erg(mesh, kqs_dict, path_dict, ts0, ts1, modulo, plot)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
 
-def calc_timeseries_dat(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plot=False):
+def calc_timeseries_dat(mesh, kqs_dict, path_dict, ts0, ts1, modulo,
+                        plot=False):
     flow_vectors = []
     tsi = 0
     timesteps = []
-    for line_d, line_v in zip(open(path_dict['depth']), open(path_dict['veloc'])):
+    for line_d, line_v in zip(open(path_dict['depth']),
+                              open(path_dict['veloc'])):
         try:
             depth = float(line_d)
             veloc = [float(v) for v in line_v.split()]
             flow_vectors.append((depth*veloc[0], depth*veloc[1]))
 
-        except:
+        except ValueError:
             if line_d.startswith("TS"):
                 ts = float(line_d.split()[1])
                 if ts > ts1:
@@ -63,20 +68,20 @@ def calc_timeseries_dat(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plo
                 if flow_vectors == []:  # First timestep
                     continue
                 else:
-                    for kq_id in kqs_dict.keys():
-                        calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id,
+                    for kq_id in kqs_dict:
+                        calc_flow_for_timestep(mesh, kqs_dict, kq_id,
                                                flow_vectors, ts, plot)
 
                 tsi += 1
                 flow_vectors = []
 
     # Last timestep values still have to be calculated
-    for kq_id, kq in kqs_dict.items():
-        calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, flow_vectors, ts,
-                               plot)
+    for kq_id in kqs_dict:
+        calc_flow_for_timestep(mesh, kqs_dict, kq_id, flow_vectors, ts, plot)
 
 
-def calc_timeseries_erg(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plot=False):
+def calc_timeseries_erg(mesh, kqs_dict, path_dict, ts0, ts1, modulo,
+                        plot=False):
     flow_vectors = []
     timesteps = []
     n_nodes = mesh.nodes_array.shape[0]
@@ -115,27 +120,25 @@ def calc_timeseries_erg(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plo
         flow_vectors[:, 1] = flow_vectors[:, 1] * values[:, 2]
 
         for kq_id in kqs_dict.keys():
-            calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, flow_vectors,
-                                   ts, plot)
+            calc_flow_for_timestep(mesh, kqs_dict, kq_id, flow_vectors, ts,
+                                   plot)
         tsi += 1
 
 
-def calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, node_flow_vectors,
-                           ts, plot=False):
-    kq_flows = []
+def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
+                           plot=False):
     ortho_flows = []
     kq = kqs_dict[kq_id]
 
     kq_dir = (kq[0, 0] - kq[1, 0], kq[0, 1] - kq[1, 1])
-    # kq_ortho_dir = (-1 * kq_dir[1], kq_dir[0])
     kq_ortho_dir = (kq_dir[1], -1*kq_dir[0])
-    kq_ortho_mag = sqrt(kq_ortho_dir[0] ** 2 + kq_ortho_dir[1] ** 2)
+    kq_ortho_mag = sqrt(kq_ortho_dir[0]**2 + kq_ortho_dir[1]**2)
 
     try:
         elmt1 = mesh.elements[kq.elmt_ids[0]]
         elmt2 = mesh.elements[kq.elmt_ids[1]]
 
-    except IndexError:
+    except IndexError:  # TODO: Check, when that would occur again
         print("IndexError:")
         print("elements[kq_elmt_ids[0]]")
         print("elements[kq_elmt_ids[1]]")
@@ -183,17 +186,15 @@ def calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, node_flow_vectors,
         width = dist_2d(intersections[i], intersections[i+1])
         f1 = ortho_flows[i]
         f2 = ortho_flows[i+1]
-        integral = (f1 + f2) / 2 * width
+        integral = (f1 + f2) / 2*width
         kq_flow = integral
-        kq_flows.append(kq_flow)
+        kqs_dict[kq_id].flows.append(kq_flow)
 
     if plot:
         # print(kq_flows)
         if list(set(ortho_flows)) != [0]:
             plot_ortho_flows(intersections, ortho_flows, ts,
-                             round(sum(kq_flows), 3))
-
-    return kq_flows
+                             round(sum(kqs_dict[kq_id].flows), 3))
 
 
 def get_flow_at_position(P, nodes, flows):
@@ -205,7 +206,6 @@ def get_flow_at_position(P, nodes, flows):
 
 def get_flow_at_position_inverse_distance_weighted(P, nodes, flows):
     flow = [0, 0]
-    cnt = len(nodes)
     for i, N in enumerate(nodes):
         dist = dist_2d(P, N)
         if dist == 0:
@@ -222,7 +222,6 @@ def get_flow_at_position_barycentric_weighted(P, nodes, flows):
     flow = [0, 0]
     weights = get_barycentric_interpolation_weights(P, nodes)
 
-    cnt = len(nodes)
     for i, N in enumerate(nodes):
         dist = dist_2d(P, N)
         if dist == 0:
@@ -237,10 +236,14 @@ def get_flow_at_position_barycentric_weighted(P, nodes, flows):
 # ONLY FOR TRIS
 def get_barycentric_interpolation_weights(P, nodes):
     v1, v2, v3 = nodes
-    w1 = (((v2[1] - v3[1]) * (P[0] - v3[0]) + (v3[0] - v2[0]) * (P[1] - v3[1])) /
-          ((v2[1] - v3[1]) * (v1[0] - v3[0]) + (v3[0] - v2[0]) * (v1[1] - v3[1])))
-    w2 = (((v3[1] - v1[1]) * (P[0] - v3[0]) + (v1[0] - v3[0]) * (P[1] - v3[1])) /
-          ((v2[1] - v3[1]) * (v1[0] - v3[0]) + (v3[0] - v2[0]) * (v1[1] - v3[1])))
+    w1 = (((v2[1] - v3[1]) * (P[0] - v3[0]) +
+           (v3[0] - v2[0]) * (P[1] - v3[1])) /
+          ((v2[1] - v3[1]) * (v1[0] - v3[0]) +
+           (v3[0] - v2[0]) * (v1[1] - v3[1])))
+    w2 = (((v3[1] - v1[1]) * (P[0] - v3[0]) +
+           (v1[0] - v3[0]) * (P[1] - v3[1])) /
+          ((v2[1] - v3[1]) * (v1[0] - v3[0]) +
+           (v3[0] - v2[0]) * (v1[1] - v3[1])))
     w3 = 1 - w1 - w2
     return [w1, w2, w3]
 
@@ -266,25 +269,29 @@ def calc_kq_elmt_intersections(mesh, kqs_dict, kdtree):
                 break
 
         if len(kqs_dict[kq_id].elmt_ids) != 2:
-            print("Start- oder Endpunkt des Kontrollquerschnitts {} liegen nicht in einem Element.".format(kq_id))
+            print("Start- oder Endpunkt des Kontrollquerschnitts {} liegen "
+                  "nicht in einem Element.".format(kq_id))
             sys.exit("Programmabbruch")
 
 
 def calc_kq_edge_intersections(mesh, kqs_dict, kdtree):
     for kq_id, kq in kqs_dict.items():
         kq_pts = kq.to_numpy()
+
         radius = dist_2d(kq.pts[0], kq.pts[1])
         center = ((kq_pts[0, 0] + kq_pts[1, 0]) / 2,
                   (kq_pts[0, 1] + kq_pts[1, 1]) / 2)
         nd_indices = kdtree.query_ball_point([center[0], center[1]], radius)
 
         edge_indices = [mesh.node_edge_link[ni] for ni in nd_indices]
-        edge_indices = list(set([item for sublist in edge_indices for item in sublist]))
+        edge_indices = list(set([item for sublist in edge_indices for
+                                 item in sublist]))
 
         kq_edge_ids = []
         kq_intersections = []
         for ei in edge_indices:
-            intersection = check_intersection(kq_pts, mesh.edges[ei], mesh.nodes)
+            intersection = check_intersection(kq_pts, mesh.edges[ei],
+                                              mesh.nodes_array)
             if intersection is not None:
                 kq_intersections.append(intersection)
                 kq_edge_ids.append(ei)
@@ -314,10 +321,10 @@ def check_intersection(kq, edge, nodes):
     segment_kq = kq
 
     # if segments_intersect_jit(segment_edge, segment_kq):
-    if cy_geo.segments_intersect(segment_edge[0], segment_edge[1], segment_kq[0], segment_kq[1]):
-        I = line_intersection(segment_edge, segment_kq)
-        return I
+    if cy_geo.segments_intersect(segment_edge[0], segment_edge[1],
+                                 segment_kq[0], segment_kq[1]):
+        intersection = line_intersection(segment_edge, segment_kq)
+        return intersection
 
     else:
         return None
-

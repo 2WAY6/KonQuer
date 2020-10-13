@@ -1,7 +1,7 @@
 from math import sqrt
 
-#import numpy as np
-#from numba import jit
+# import numpy as np
+# from numba import jit
 
 
 def dist_2d(A, B):
@@ -12,8 +12,10 @@ def dist_3d(A, B):
     return sqrt((A[0] - B[0]) ** 2 + (A[1] - B[1]) ** 2 + (A[2] - B[2]) ** 2)
 
 
+# >= because of zero area case
 def ccw(A, B, C):
-    return (C[1] - A[1]) * (B[0] - A[0]) >= (B[1] - A[1]) * (C[0] - A[0]) # >= because of zero area case
+    return (C[1] - A[1]) * (B[0] - A[0]) >= (B[1] - A[1]) * (C[0] - A[0])
+
 
 # @jit
 # # CCW (Counter Clock Wise check) ONLY WORKS IN 2D OF COURSE
@@ -31,11 +33,12 @@ def ccw(A, B, C):
 
 
 # Math
-def det(A, B): # dt.: Determinante
+def det(A, B):  # dt.: Determinante
     return A[0] * B[1] - A[1] * B[0]
 
 
-# Line intersection (ATTENTION: infinitely long segment !!!). Also includes shared point
+# Line intersection (ATTENTION: infinitely long segment !!!).
+# Also includes shared point
 def line_intersection(S1, S2,):
     S1A, S1B, S2A, S2B = S1[0], S1[1], S2[0], S2[1]
 
@@ -61,7 +64,7 @@ def point_in_element(N, poly):
     cnt = len(poly)
     for i in range(cnt):
         i1 = i
-        i2 = (i+1)%cnt
+        i2 = (i+1) % cnt
         bools.append(ccw(N, poly[i1], poly[i2]))
     if sum(bools) == cnt or sum(bools) == 0:
         return True

@@ -29,7 +29,8 @@ def import_2dm_mesh(path_mesh):
                 max_i = max(nd_indices[i], nd_indices[(i + 1) % c])
                 edges.append(f"{min_i} {max_i}")
 
-    edges = np.array([[int(edge.split()[0]), int(edge.split()[1])] for edge in list(set(edges))])
+    edges = np.array([[int(edge.split()[0]), int(edge.split()[1])]
+                      for edge in list(set(edges))])
 
     nodes_array = np.zeros((len(nodes), 5))
     nodes_array[:, (0, 1, 2)] = np.array(nodes)
@@ -39,14 +40,16 @@ def import_2dm_mesh(path_mesh):
 
 def import_uro_mesh(path_mesh):
     print("- Lese UnRunOff-Mesh...")
-    lines = [line for line in open(path_mesh).readlines() if not line.startswith('C')]
+    lines = [line for line in open(path_mesh).readlines()
+             if not line.startswith('C')]
 
     n_bndnodes = int(lines[0])
     n_nodes = int(lines[1])
     n_elmts = int(lines[2 + n_nodes + n_bndnodes])
 
     i_nodes = [2, 2 + n_nodes + n_bndnodes]
-    i_elmts = [2 + n_nodes + n_bndnodes + 1, 2 + n_nodes + n_bndnodes + 1 + n_elmts]
+    i_elmts = [2 + n_nodes + n_bndnodes + 1, 2 + n_nodes + n_bndnodes + 1 +
+               n_elmts]
 
     def line_to_node(line):
         return [float(x) for x in line.split()[1:]]
@@ -66,7 +69,8 @@ def import_uro_mesh(path_mesh):
             min_i = min(nids[i], nids[(i + 1) % 3])
             max_i = max(nids[i], nids[(i + 1) % 3])
             edges.append(f"{min_i} {max_i}")
-    edges = np.array([[int(edge.split()[0]), int(edge.split()[1])] for edge in list(set(edges))])
+    edges = np.array([[int(edge.split()[0]), int(edge.split()[1])]
+                      for edge in list(set(edges))])
 
     return nodes_array, edges, elements
 
@@ -79,7 +83,8 @@ def import_mesh(path_mesh):
         nodes_array, edges, elements = import_uro_mesh(path_mesh)
     else:
         sys.exit("Netzformat nicht unterstuetzt. Programmabbruch.")
-    print("  - {} Knoten, {} Elemente und {} Kanten importiert.".format(len(nodes_array), len(elements), len(edges)))
+    print("  - {} Knoten, {} Elemente und {} Kanten importiert.".format(
+        len(nodes_array), len(elements), len(edges)))
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
     print("- Verknuepfe Kanten und Knoten...")
@@ -119,8 +124,8 @@ def import_kqs_from_shape(path_shape, field_name=None):
         kq_list.append(kq)
 
     kq_ids = []
-    if field_id is not None:
-        index_station = fields.index(field_id)
+    if field_name is not None:
+        index_station = fields.index(field_name)
         for i, r in enumerate(sf.records()):
             kq_list[i].name = r[index_station]
     else:
@@ -153,12 +158,14 @@ def write_wel(path_out, kq_timeseries_dict, timesteps):
     stream_out = open(path_out, 'w')
     stream_out.write("*WEL 01.01.2000 00:00\n")
     stream_out.write(";Datum_Zeit;{}\n".format(';'.join(map(str, kqids))))
-    stream_out.write(";-;{}\n".format(';'.join(["m3/s" for i in range(len(kq_timeseries_dict))])))
+    stream_out.write(";-;{}\n".format(';'.join(["m3/s" for i in range(
+        len(kq_timeseries_dict))])))
 
     t0 = datetime.datetime(2000, 1, 1, 0, 0, 0)
-    format = "%d.%m.%Y %H:%M" #:%S"
+    format = "%d.%m.%Y %H:%M"  # :%S"
     for i, seconds in enumerate(timesteps):
         ti = t0 + datetime.timedelta(seconds=float(timesteps[i]))
         ti_str = ti.strftime(format)
-        stream_out.write(";{};{}\n".format(ti_str, ';'.join(map(str, values[i]))))
+        stream_out.write(";{};{}\n".format(ti_str, ';'.join(map(str,
+                                                                values[i]))))
     stream_out.close()
