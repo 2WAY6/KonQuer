@@ -9,6 +9,8 @@ class KontrollQuerschnitt:
         self.elmt_ids = None  # Elements, where p0 and p1 are within
         self.edge_ids = None  # Edges that are intersected
         self.intersections = None
+        self.timesteps = None
+        self.flows = None
 
     def to_numpy(self):
         return np.array([self.p0, self.p1])

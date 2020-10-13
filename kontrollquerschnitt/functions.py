@@ -30,26 +30,19 @@ def run_kq(mesh, kqs_dict, path_dict,
     print("- Ermittle Durchfluesse pro Kontrollquerschnitt je Zeitschritt...")
     t0 = time.time()
     if path_dict['depth'] is not None and path_dict['veloc'] is not None:
-        kq_timeseries_dict, timesteps = calc_timeseries_dat(nodes, elements, edges, kdtree, kqs_dict, kq_ids,
-                                                            path_depth, path_veloc, kq_edge_ids_dict,
-                                                            kq_intersection_dict, kq_elmt_ids_dict, ts0, ts1, modulo,
-                                                            plot)
+        calc_timeseries_dat(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, 
+                            modulo, plot)
     elif path_dict['erg'] is not None:
-        kq_timeseries_dict, timesteps = calc_timeseries_erg(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_erg,
-                                                            kq_edge_ids_dict, kq_intersection_dict, kq_elmt_ids_dict,
-                                                            ts0, ts1, modulo, plot)
+        calc_timeseries_erg(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, 
+                            modulo, plot)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
-    return kq_timeseries_dict, timesteps
 
-
-def calc_timeseries_dat(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_depth, path_veloc, kq_edge_ids_dict,
-                        kq_intersection_dict, kq_elmt_ids_dict, ts0, ts1, modulo, plot=False):
-    kq_timeseries_dict = {i: [] for i in kqs_dict.keys()}
+def calc_timeseries_dat(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plot=False):
     flow_vectors = []
     tsi = 0
     timesteps = []
-    for line_d, line_v in zip(open(path_depth), open(path_veloc)):
+    for line_d, line_v in zip(open(path_dict['depth']), open(path_dict['veloc'])):
         try:
             depth = float(line_d)
             veloc = [float(v) for v in line_v.split()]
@@ -67,33 +60,26 @@ def calc_timeseries_dat(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_d
 
                 print("Bearbeite Zeitschritt {}".format(ts), end='\r')
                 timesteps.append(ts)
-                if flow_vectors == []: # First timestep
+                if flow_vectors == []:  # First timestep
                     continue
                 else:
-                    for kq_id, kq in kqs_dict.items():
-                        kq_flow = calc_flow_for_timestep(nodes, elements, edges, kdtree, kq, kq_edge_ids_dict[kq_id],
-                                                         kq_intersection_dict[kq_id], kq_elmt_ids_dict[kq_id],
-                                                         flow_vectors, ts, plot)
-                        kq_timeseries_dict[kq_id].append(kq_flow)
+                    for kq_id in kqs_dict.keys():
+                        calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id,
+                                               flow_vectors, ts, plot)
 
                 tsi += 1
                 flow_vectors = []
 
     # Last timestep values still have to be calculated
     for kq_id, kq in kqs_dict.items():
-        kq_flow = calc_flow_for_timestep(nodes, elements, edges, kdtree, kq, kq_edge_ids_dict[kq_id],
-                                         kq_intersection_dict[kq_id], kq_elmt_ids_dict[kq_id], flow_vectors, ts)
-        kq_timeseries_dict[kq_id].append(kq_flow)
-
-    return kq_timeseries_dict, timesteps
+        calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, flow_vectors, ts,
+                               plot)
 
 
-def calc_timeseries_erg(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_erg, kq_edge_ids_dict,
-                        kq_intersection_dict, kq_elmt_ids_dict, ts0, ts1, modulo, plot=False):
-    kq_timeseries_dict = {i: [] for i in kqs_dict.keys()}
+def calc_timeseries_erg(mesh, kdtree, kqs_dict, path_dict, ts0, ts1, modulo, plot=False):
     flow_vectors = []
     timesteps = []
-    n_nodes = nodes.shape[0]
+    n_nodes = mesh.nodes_array.shape[0]
 
     # 4byte
     # float Zeit
@@ -103,7 +89,7 @@ def calc_timeseries_erg(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_e
     # 4byte
     values_per_timestep = 1 + 3 * n_nodes + 4
     flow_vectors = np.zeros((n_nodes, 2), dtype=np.float)
-    f = open(path_erg)
+    f = open(path_dict['erg'])
     tsi = 0
     while 1:
         data_ts = np.fromfile(f, dtype='float32', count=values_per_timestep)
@@ -124,92 +110,73 @@ def calc_timeseries_erg(nodes, elements, edges, kdtree, kqs_dict, kq_ids, path_e
         print(f"- Bearbeite Zeitschritt {ts}", end='\r')
         timesteps.append(ts)
         values = data_ts[4:-1].reshape([n_nodes, 3])
-        flow_vectors[:] = values[:,(0,1)]
-        flow_vectors[:,0] = flow_vectors[:,0] * values[:,2]
-        flow_vectors[:,1] = flow_vectors[:,1] * values[:,2]
+        flow_vectors[:] = values[:, (0, 1)]
+        flow_vectors[:, 0] = flow_vectors[:, 0] * values[:, 2]
+        flow_vectors[:, 1] = flow_vectors[:, 1] * values[:, 2]
 
-        for kq_id, kq in kqs_dict.items():
-            kq_flow = calc_flow_for_timestep(nodes, elements, edges, kdtree, kq, kq_edge_ids_dict[kq_id],
-                                             kq_intersection_dict[kq_id], kq_elmt_ids_dict[kq_id], flow_vectors, ts,
-                                             plot)
-            kq_timeseries_dict[kq_id].append(kq_flow)
+        for kq_id in kqs_dict.keys():
+            calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, flow_vectors,
+                                   ts, plot)
         tsi += 1
 
-    return kq_timeseries_dict, timesteps
 
-
-def calc_flow_for_timestep(nodes, elements, edges, kdtree, kq, kq_edge_ids, kq_intersections, kq_elmt_ids,
-                           node_flow_vectors, ts, plot=False):
+def calc_flow_for_timestep(mesh, kdtree, kqs_dict, kq_id, node_flow_vectors,
+                           ts, plot=False):
     kq_flows = []
     ortho_flows = []
-
-    use_old_version = False
+    kq = kqs_dict[kq_id]
 
     kq_dir = (kq[0, 0] - kq[1, 0], kq[0, 1] - kq[1, 1])
     # kq_ortho_dir = (-1 * kq_dir[1], kq_dir[0])
     kq_ortho_dir = (kq_dir[1], -1*kq_dir[0])
     kq_ortho_mag = sqrt(kq_ortho_dir[0] ** 2 + kq_ortho_dir[1] ** 2)
 
-    if use_old_version == True:
-        # version using nearest node version
-        i_start = kdtree.query(kq[0])[1]
-        i_end = kdtree.query(kq[1])[1]
-        nd_start = nodes[i_start]
-        nd_end = nodes[i_end]
+    try:
+        elmt1 = mesh.elements[kq.elmt_ids[0]]
+        elmt2 = mesh.elements[kq.elmt_ids[1]]
 
-        flow = node_flow_vectors[i_start]
-        ortho_flow_start = (flow[0] * kq_ortho_dir[0] + flow[1] * kq_ortho_dir[1]) / kq_ortho_mag
-        flow = node_flow_vectors[i_end]
-        ortho_flow_end = (flow[0] * kq_ortho_dir[0] + flow[1] * kq_ortho_dir[1]) / kq_ortho_mag
+    except IndexError:
+        print("IndexError:")
+        print("elements[kq_elmt_ids[0]]")
+        print("elements[kq_elmt_ids[1]]")
+        print("kq_elmt_ids: {}".format(kq.elmt_ids))
+        sys.exit("Programmabbruch")
 
-    # version using start and end point of kq
-    else:
-        try:
-            elmt1 = elements[kq_elmt_ids[0]]
-            elmt2 = elements[kq_elmt_ids[1]]
-        except IndexError:
-            print("IndexError:")
-            print("elements[kq_elmt_ids[0]]")
-            print("elements[kq_elmt_ids[1]]")
-            print("kq_elmt_ids: {}".format(kq_elmt_ids))
-            sys.exit("Programmabbruch")
+    flows1 = np.array([node_flow_vectors[nid] for nid in elmt1])
+    flows2 = np.array([node_flow_vectors[nid] for nid in elmt2])
 
-        flows1 = np.array([node_flow_vectors[nid] for nid in elmt1])
-        flows2 = np.array([node_flow_vectors[nid] for nid in elmt2])
+    nodes1 = mesh.nodes_array[elmt1]
+    nodes2 = mesh.nodes_array[elmt2]
 
-        nodes1 = nodes[elmt1]
-        nodes2 = nodes[elmt2]
+    flow_start = get_flow_at_position(kq[0], nodes1, flows1)
+    flow_end = get_flow_at_position(kq[1], nodes2, flows2)
 
-        flow_start = get_flow_at_position(kq[0], nodes1, flows1)
-        flow_end = get_flow_at_position(kq[1], nodes2, flows2)
-
-        ortho_flow_start = (flow_start[0] * kq_ortho_dir[0] + flow_start[1] * kq_ortho_dir[1]) / kq_ortho_mag
-        ortho_flow_end = (flow_end[0] * kq_ortho_dir[0] + flow_end[1] * kq_ortho_dir[1]) / kq_ortho_mag
+    ortho_flow_start = (flow_start[0] * kq_ortho_dir[0] +
+                        flow_start[1] * kq_ortho_dir[1]) / kq_ortho_mag
+    ortho_flow_end = (flow_end[0] * kq_ortho_dir[0] +
+                      flow_end[1] * kq_ortho_dir[1]) / kq_ortho_mag
 
     ortho_flows.append(ortho_flow_start)
 
-    for i, I in enumerate(kq_intersections):
-        nid1 = edges[kq_edge_ids[i]][0]
-        nid2 = edges[kq_edge_ids[i]][1]
-        A = nodes[nid1]
-        B = nodes[nid2]
+    for i, I in enumerate(kq.intersections):
+        nid1 = mesh.edges[kq.edge_ids[i]][0]
+        nid2 = mesh.edges[kq.edge_ids[i]][1]
+        A = mesh.nodes_array[nid1]
+        B = mesh.nodes_array[nid2]
         qA = node_flow_vectors[nid1]
         qB = node_flow_vectors[nid2]
 
         ratio = dist_2d(A, I) / dist_2d(A, B)
-        flow = (qA[0] + ratio * (qB[0] - qA[0]), qA[1] + ratio * (qB[1] - qA[1]))
-        flow_mag = sqrt(flow[0]**2 + flow[1]**2)
+        flow = (qA[0] + ratio * (qB[0] - qA[0]),
+                qA[1] + ratio * (qB[1] - qA[1]))
 
-        ortho_flow = (flow[0] * kq_ortho_dir[0] + flow[1] * kq_ortho_dir[1]) / kq_ortho_mag
+        ortho_flow = (flow[0] * kq_ortho_dir[0] +
+                      flow[1] * kq_ortho_dir[1]) / kq_ortho_mag
         ortho_flows.append(ortho_flow)
 
     ortho_flows.append(ortho_flow_end)
 
-    if use_old_version:
-        intersections = [nd_start] + kq_intersections + [nd_end]
-    else:
-        intersections = [kq[0]] + kq_intersections + [kq[1]]
-
+    intersections = [kq[0]] + kq.intersections + [kq[1]]
 
     kq_flow = 0
     for i, pnt in enumerate(intersections[:-1]):
@@ -218,21 +185,14 @@ def calc_flow_for_timestep(nodes, elements, edges, kdtree, kq, kq_edge_ids, kq_i
         f2 = ortho_flows[i+1]
         integral = (f1 + f2) / 2 * width
         kq_flow = integral
-
-        # print(f"- {i}")
-        # print(f"  - flow 1: {f1} m2/s")
-        # print(f"  - flow 2: {f2} m2/s")
-        # print(f"  - width:  {width} m")
-        # print(f"  - integral:   {integral} m3/s")
-
         kq_flows.append(kq_flow)
 
     if plot:
         # print(kq_flows)
         if list(set(ortho_flows)) != [0]:
-            plot_ortho_flows(intersections, ortho_flows, ts, round(sum(kq_flows), 3))
+            plot_ortho_flows(intersections, ortho_flows, ts,
+                             round(sum(kq_flows), 3))
 
-    #print("- {} = Summe von {}".format(sum(kq_flows), kq_flows))
     return kq_flows
 
 
