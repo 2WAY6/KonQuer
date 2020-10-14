@@ -53,12 +53,11 @@ def main():
     print("-> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
     print("\nErmittle {} Kontrollquerschnitte...".format(len(kqs_dict)))
-    kq_timeseries_dict, timesteps = run_kq(mesh, kqs_dict, path_dict, kdtree,
-                                           params)
+    run_kq(mesh, kqs_dict, path_dict, kdtree, params)
 
     if params['plot'] or params['save']:
         print("\nPlotte Kontrollquerschnitte...")
-        plot_kqs(kq_timeseries_dict, timesteps, plot=params['plot'],
+        plot_kqs(kqs_dict, plot=params['plot'],
                  saveplots=params['save'],
                  folder=os.path.dirname(path_dict['shp']),
                  prefix=params['prefix'])
@@ -71,7 +70,7 @@ def main():
 
     print("\nSchreibe Kontrollquerschnitte als {}...".format(
         os.path.basename(path_wel)))
-    write_wel(path_wel, kq_timeseries_dict, timesteps)
+    write_wel(path_wel, kqs_dict)
 
     dt = time.time() - t0_prog
     print("\nProgramm nach {:7.2f} Minuten beendet.".format(dt/60))

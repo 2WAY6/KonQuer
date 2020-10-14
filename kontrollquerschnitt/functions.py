@@ -6,7 +6,8 @@ import numpy as np
 
 from .geometry import dist_2d, line_intersection, point_in_element
 from .plotting import plot_ortho_flows
-import cython_geometry as cy_geo
+# import cython_geometry as cy_geo
+from .cython_geometry import segments_intersect as cy_segments_intersect
 
 
 def run_kq(mesh, kqs_dict, path_dict, kdtree, params, plot=False):
@@ -129,8 +130,9 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
                            plot=False):
     ortho_flows = []
     kq = kqs_dict[kq_id]
+    kq_pts = kqs_dict[kq_id].to_numpy()
 
-    kq_dir = (kq[0, 0] - kq[1, 0], kq[0, 1] - kq[1, 1])
+    kq_dir = (kq_pts[0, 0] - kq_pts[1, 0], kq_pts[0, 1] - kq_pts[1, 1])
     kq_ortho_dir = (kq_dir[1], -1*kq_dir[0])
     kq_ortho_mag = sqrt(kq_ortho_dir[0]**2 + kq_ortho_dir[1]**2)
 
@@ -151,8 +153,8 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
     nodes1 = mesh.nodes_array[elmt1]
     nodes2 = mesh.nodes_array[elmt2]
 
-    flow_start = get_flow_at_position(kq[0], nodes1, flows1)
-    flow_end = get_flow_at_position(kq[1], nodes2, flows2)
+    flow_start = get_flow_at_position(kq_pts[0], nodes1, flows1)
+    flow_end = get_flow_at_position(kq_pts[1], nodes2, flows2)
 
     ortho_flow_start = (flow_start[0] * kq_ortho_dir[0] +
                         flow_start[1] * kq_ortho_dir[1]) / kq_ortho_mag
@@ -179,7 +181,7 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
 
     ortho_flows.append(ortho_flow_end)
 
-    intersections = [kq[0]] + kq.intersections + [kq[1]]
+    intersections = [kq_pts[0]] + kq.intersections + [kq_pts[1]]
 
     kq_flow = 0
     for i, pnt in enumerate(intersections[:-1]):
@@ -187,8 +189,9 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
         f1 = ortho_flows[i]
         f2 = ortho_flows[i+1]
         integral = (f1 + f2) / 2*width
-        kq_flow = integral
-        kqs_dict[kq_id].flows.append(kq_flow)
+        kq_flow += integral
+    kqs_dict[kq_id].flows.append(kq_flow)
+    kqs_dict[kq_id].timesteps.append(ts)
 
     if plot:
         # print(kq_flows)
@@ -260,11 +263,13 @@ def calc_kq_elmt_intersections(mesh, kqs_dict, kdtree):
 
         kqs_dict[kq_id].elmt_ids = []
         for eid in start_eid_candidates:
-            if point_in_element(kq_pts[0], mesh.nodes[mesh.elements[eid]]):
+            if point_in_element(kq_pts[0],
+                                mesh.nodes_array[mesh.elements[eid]]):
                 kqs_dict[kq_id].elmt_ids.append(eid)
                 break
         for eid in end_eid_candidates:
-            if point_in_element(kq_pts[1], mesh.nodes[mesh.elements[eid]]):
+            if point_in_element(kq_pts[1],
+                                mesh.nodes_array[mesh.elements[eid]]):
                 kqs_dict[kq_id].elmt_ids.append(eid)
                 break
 
@@ -278,7 +283,7 @@ def calc_kq_edge_intersections(mesh, kqs_dict, kdtree):
     for kq_id, kq in kqs_dict.items():
         kq_pts = kq.to_numpy()
 
-        radius = dist_2d(kq.pts[0], kq.pts[1])
+        radius = dist_2d(kq_pts[0], kq_pts[1])
         center = ((kq_pts[0, 0] + kq_pts[1, 0]) / 2,
                   (kq_pts[0, 1] + kq_pts[1, 1]) / 2)
         nd_indices = kdtree.query_ball_point([center[0], center[1]], radius)
@@ -321,8 +326,8 @@ def check_intersection(kq, edge, nodes):
     segment_kq = kq
 
     # if segments_intersect_jit(segment_edge, segment_kq):
-    if cy_geo.segments_intersect(segment_edge[0], segment_edge[1],
-                                 segment_kq[0], segment_kq[1]):
+    if cy_segments_intersect(segment_edge[0], segment_edge[1],
+                             segment_kq[0], segment_kq[1]):
         intersection = line_intersection(segment_edge, segment_kq)
         return intersection
 

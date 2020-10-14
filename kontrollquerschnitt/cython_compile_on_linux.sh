@@ -1,1 +1,1 @@
-python3 cython_setup.py build_ext --inplace
+python3 cython_setup_linux.py build_ext --inplace

@@ -16,8 +16,7 @@ class KontrollQuerschnitt:
         return np.array([self.p0, self.p1])
 
     # At the moment, only the start and end point are imported
-    def from_lineshape(self, name, geometry):
-        self.name = name
+    def from_lineshape(self, geometry):
         self.p0 = (geometry.points[0][0], geometry.points[0][1])
         self.p1 = (geometry.points[-1][0], geometry.points[-1][1])
 

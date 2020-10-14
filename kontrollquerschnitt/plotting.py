@@ -47,22 +47,22 @@ def plot_ortho_flows(intersections, ortho_flows, ts, summe, divisor=0.1):
     plt.close()
 
 
-def plot_kqs(kq_timeseries_dict, timesteps, plot=True, saveplots=False,
-             folder='', prefix=None):  # TODO: Make plot saveable
+def plot_kqs(kqs_dict, plot=True, saveplots=False,
+             folder='', prefix=None):
+    timesteps = list(kqs_dict.values())[0].timesteps
     timesteps_hours = [ts/3600 for ts in timesteps]
 
-    for kqid, kq_timeseries in kq_timeseries_dict.items():
-        flows = [sum(flow) for flow in kq_timeseries]
+    for kqid, kq in kqs_dict.items():
         vols = [0]
-        for i, flow in enumerate(flows[:-1]):
+        for i, flow in enumerate(kq.flows[:-1]):
             vol = (timesteps[i+1] - timesteps[i]) * \
-                  (flows[i] + flows[i+1]) / 2  # Trapezintegration
+                  (kq.flows[i] + kq.flows[i+1]) / 2  # Trapezintegration
             vols.append(vol + vols[-1])
 
         max_flow = 0
         max_i = 0
 
-        for i, f in enumerate(flows):
+        for i, f in enumerate(kq.flows):
             if f > max_flow:
                 max_i = i
                 max_flow = f
@@ -70,7 +70,7 @@ def plot_kqs(kq_timeseries_dict, timesteps, plot=True, saveplots=False,
 
         fig, ax1 = plt.subplots()
         color = 'blue'
-        ax1.plot(timesteps_hours, flows, color=color)
+        ax1.plot(timesteps_hours, kq.flows, color=color)
         ax1.text(max_ts, max_flow, round(max_flow, 2), color='blue')
         ax1.set_title("Kontrollquerschnitt: {}".format(kqid))
         ax1.set_xlabel("Zeitschritt [h]")

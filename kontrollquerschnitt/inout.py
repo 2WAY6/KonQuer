@@ -123,7 +123,6 @@ def import_kqs_from_shape(path_shape, field_name=None):
         kq.from_lineshape(sf.shape(i))
         kq_list.append(kq)
 
-    kq_ids = []
     if field_name is not None:
         index_station = fields.index(field_name)
         for i, r in enumerate(sf.records()):
@@ -132,8 +131,7 @@ def import_kqs_from_shape(path_shape, field_name=None):
         for i in range(len(kq_list)):
             kq_list[i].name = str(i)
 
-    kqs_dict = {kq_id: kq for kq_id, kq in zip(kq_ids, kq_list)}
-
+    kqs_dict = {kq.name: kq for kq in kq_list}
     return kqs_dict
 
 
@@ -146,20 +144,21 @@ def write_csv(path_out_csv, kq_timeseries_dict):
         stream_out.close()
 
 
-def write_wel(path_out, kq_timeseries_dict, timesteps):
+def write_wel(path_out, kqs_dict):
+    timesteps = list(kqs_dict.values())[0].timesteps
+
     values = [[] for i in range(len(timesteps))]
     kqids = []
-    for kqid, kq_timeseries in kq_timeseries_dict.items():
+    for kqid, kq in kqs_dict.items():
         kqids.append(kqid)
-        flows = [sum(flow) for flow in kq_timeseries]
-        for i, flow in enumerate(flows):
+        for i, flow in enumerate(kq.flows):
             values[i].append(flow)
 
     stream_out = open(path_out, 'w')
     stream_out.write("*WEL 01.01.2000 00:00\n")
     stream_out.write(";Datum_Zeit;{}\n".format(';'.join(map(str, kqids))))
     stream_out.write(";-;{}\n".format(';'.join(["m3/s" for i in range(
-        len(kq_timeseries_dict))])))
+        len(kqs_dict))])))
 
     t0 = datetime.datetime(2000, 1, 1, 0, 0, 0)
     format = "%d.%m.%Y %H:%M"  # :%S"
