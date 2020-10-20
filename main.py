@@ -10,6 +10,14 @@ Modified:   October 2020
 
 Status:     Tested and published internally
 
+TODO:   Summenkurve optional in die wel schreiben
+TODO:   Ausgabedateien am Programmausfuehrungsort und nicht am Shape-Ort
+TODO:   Plot: Zeitpunkt 0 ganz links und nicht leicht versetzt
+TODO:   skip -> modulo (und die anderen Parameternamen ueberdenken)
+TODO:   Standardwerte der Parameter ggf. anpassen
+TODO:   Meldung nur bringen, wenn len(KQ) > 2
+TODO:   Anfangs- und Endpunkt-Interpolation robuster machen
+
 '''
 
 import sys
