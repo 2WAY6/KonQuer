@@ -17,21 +17,6 @@ def ccw(A, B, C):
     return (C[1] - A[1]) * (B[0] - A[0]) >= (B[1] - A[1]) * (C[0] - A[0])
 
 
-# @jit
-# # CCW (Counter Clock Wise check) ONLY WORKS IN 2D OF COURSE
-# # TODO: Source?
-# def ccw_jit(A, B, C):
-#     return (C[1] - A[1]) * (B[0] - A[0]) > (B[1] - A[1]) * (C[0] - A[0])
-
-
-# # Segment Intersection -> Intersection includes shared point
-# @jit
-# def segments_intersect_jit(S1, S2):
-#     s1_a, s1_b, s2_a, s2_b = S1[0], S1[1], S2[0], S2[1]
-#     return (ccw_jit(s1_a, s2_a, s2_b) != ccw_jit(s1_b, s2_a, s2_b)
-#             and ccw_jit(s1_a, s1_b, s2_a) != ccw_jit(s1_a, s1_b, s2_b))
-
-
 # Math
 def det(A, B):  # dt.: Determinante
     return A[0] * B[1] - A[1] * B[0]

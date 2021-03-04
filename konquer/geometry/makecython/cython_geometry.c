@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "cython_geometry",
+        "name": "konquer.geometry.cython.cython_geometry",
         "sources": [
             "cython_geometry.pyx"
         ]
     },
-    "module_name": "cython_geometry"
+    "module_name": "konquer.geometry.cython.cython_geometry"
 }
 END: Cython Metadata */
 
@@ -22,7 +22,7 @@ END: Cython Metadata */
 #else
 #define CYTHON_ABI "0_29_21"
 #define CYTHON_HEX_VERSION 0x001D15F0
-#define CYTHON_FUTURE_DIVISION 1
+#define CYTHON_FUTURE_DIVISION 0
 #include <stddef.h>
 #ifndef offsetof
   #define offsetof(type, member) ( (size_t) & ((type*)0) -> member )
@@ -615,8 +615,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__cython_geometry
-#define __PYX_HAVE_API__cython_geometry
+#define __PYX_HAVE__konquer__geometry__cython__cython_geometry
+#define __PYX_HAVE_API__konquer__geometry__cython__cython_geometry
 /* Early includes */
 #include <math.h>
 #include "pythread.h"
@@ -949,29 +949,29 @@ struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
-struct __pyx_opt_args_15cython_geometry_is_point_in_polygon;
-struct __pyx_opt_args_15cython_geometry_assign_point_to_polygon;
+struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon;
+struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon;
 
-/* "cython_geometry.pyx":59
+/* "konquer/geometry/cython/cython_geometry.pyx":59
  * @boundscheck(False)
  * @wraparound(False)
  * cdef bint is_point_in_polygon(double[:] P, double[:] R, double[:,:] polygon, double ray_length=10000000):             # <<<<<<<<<<<<<<
  *     cdef int n_vertices = polygon.shape[0]
  *     # cdef double[:] R = np.array([P[0] + ray_length, P[1]])
  */
-struct __pyx_opt_args_15cython_geometry_is_point_in_polygon {
+struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon {
   int __pyx_n;
   double ray_length;
 };
 
-/* "cython_geometry.pyx":91
+/* "konquer/geometry/cython/cython_geometry.pyx":91
  * @boundscheck(False)
  * @wraparound(False)
  * cdef int assign_point_to_polygon(double[:] P, list polygons, int n_polys, double[:,:] polygon_bboxes, double ray_length=10000000):             # <<<<<<<<<<<<<<
  *     cdef int i
  *     cdef double[:] R = np.array([P[0] + ray_length, P[1]])
  */
-struct __pyx_opt_args_15cython_geometry_assign_point_to_polygon {
+struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon {
   int __pyx_n;
   double ray_length;
 };
@@ -1968,7 +1968,7 @@ static PyObject *__pyx_memoryviewslice_assign_item_from_object(struct __pyx_memo
 
 /* Module declarations from 'libc.math' */
 
-/* Module declarations from 'cython_geometry' */
+/* Module declarations from 'konquer.geometry.cython.cython_geometry' */
 static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
@@ -1980,12 +1980,12 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
-static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_opt_args_15cython_geometry_is_point_in_polygon *__pyx_optional_args); /*proto*/
-static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslice, PyObject *, __Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
-static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice, PyObject *, int, __Pyx_memviewslice, struct __pyx_opt_args_15cython_geometry_assign_point_to_polygon *__pyx_optional_args); /*proto*/
+static double __pyx_f_7konquer_8geometry_6cython_15cython_geometry_det_2d(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon *__pyx_optional_args); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslice, PyObject *, __Pyx_memviewslice, __Pyx_memviewslice, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice, PyObject *, int, __Pyx_memviewslice, struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon *__pyx_optional_args); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -2022,11 +2022,11 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, 
 static PyObject *__pyx_format_from_typeinfo(__Pyx_TypeInfo *); /*proto*/
 static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_long = { "long", NULL, sizeof(long), { 0 }, 0, IS_UNSIGNED(long) ? 'U' : 'I', IS_UNSIGNED(long), 0 };
-#define __Pyx_MODULE_NAME "cython_geometry"
-extern int __pyx_module_is_main_cython_geometry;
-int __pyx_module_is_main_cython_geometry = 0;
+#define __Pyx_MODULE_NAME "konquer.geometry.cython.cython_geometry"
+extern int __pyx_module_is_main_konquer__geometry__cython__cython_geometry;
+int __pyx_module_is_main_konquer__geometry__cython__cython_geometry = 0;
 
-/* Implementation of 'cython_geometry' */
+/* Implementation of 'konquer.geometry.cython.cython_geometry' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_MemoryError;
@@ -2243,8 +2243,8 @@ static PyObject *__pyx_kp_s_unable_to_allocate_array_data;
 static PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
 static PyObject *__pyx_n_s_unpack;
 static PyObject *__pyx_n_s_update;
-static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D); /* proto */
-static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes); /* proto */
+static PyObject *__pyx_pf_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D); /* proto */
+static PyObject *__pyx_pf_7konquer_8geometry_6cython_15cython_geometry_2assign_points_to_polygons(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -2322,7 +2322,7 @@ static PyObject *__pyx_tuple__30;
 static PyObject *__pyx_codeobj__19;
 /* Late includes */
 
-/* "cython_geometry.pyx":10
+/* "konquer/geometry/cython/cython_geometry.pyx":10
  * @boundscheck(False)
  * @wraparound(False)
  * cdef double det_2d(double[:] A, double[:] B):             # <<<<<<<<<<<<<<
@@ -2330,7 +2330,7 @@ static PyObject *__pyx_codeobj__19;
  *     return det
  */
 
-static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B) {
+static double __pyx_f_7konquer_8geometry_6cython_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B) {
   double __pyx_v_det;
   double __pyx_r;
   __Pyx_TraceDeclarations
@@ -2345,7 +2345,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
   __Pyx_RefNannySetupContext("det_2d", 0);
   __Pyx_TraceCall("det_2d", __pyx_f[0], 10, 0, __PYX_ERR(0, 10, __pyx_L1_error));
 
-  /* "cython_geometry.pyx":11
+  /* "konquer/geometry/cython/cython_geometry.pyx":11
  * @wraparound(False)
  * cdef double det_2d(double[:] A, double[:] B):
  *     cdef double det = A[0] * B[1] - A[1] * B[0]             # <<<<<<<<<<<<<<
@@ -2358,7 +2358,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
   __pyx_t_4 = 0;
   __pyx_v_det = (((*((double *) ( /* dim=0 */ (__pyx_v_A.data + __pyx_t_1 * __pyx_v_A.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_B.data + __pyx_t_2 * __pyx_v_B.strides[0]) )))) - ((*((double *) ( /* dim=0 */ (__pyx_v_A.data + __pyx_t_3 * __pyx_v_A.strides[0]) ))) * (*((double *) ( /* dim=0 */ (__pyx_v_B.data + __pyx_t_4 * __pyx_v_B.strides[0]) )))));
 
-  /* "cython_geometry.pyx":12
+  /* "konquer/geometry/cython/cython_geometry.pyx":12
  * cdef double det_2d(double[:] A, double[:] B):
  *     cdef double det = A[0] * B[1] - A[1] * B[0]
  *     return det             # <<<<<<<<<<<<<<
@@ -2368,7 +2368,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
   __pyx_r = __pyx_v_det;
   goto __pyx_L0;
 
-  /* "cython_geometry.pyx":10
+  /* "konquer/geometry/cython/cython_geometry.pyx":10
  * @boundscheck(False)
  * @wraparound(False)
  * cdef double det_2d(double[:] A, double[:] B):             # <<<<<<<<<<<<<<
@@ -2378,7 +2378,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("cython_geometry.det_2d", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.det_2d", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_TraceReturn(Py_None, 0);
@@ -2386,7 +2386,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
   return __pyx_r;
 }
 
-/* "cython_geometry.pyx":18
+/* "konquer/geometry/cython/cython_geometry.pyx":18
  * @boundscheck(False)
  * @wraparound(False)
  * cdef bint is_ccw(double[:] A, double[:] B, double[:] C):             # <<<<<<<<<<<<<<
@@ -2394,7 +2394,7 @@ static double __pyx_f_15cython_geometry_det_2d(__Pyx_memviewslice __pyx_v_A, __P
  *     CA[0] = A[0] - C[0]
  */
 
-static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C) {
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C) {
   double __pyx_v_CA[2];
   double __pyx_v_CB[2];
   double __pyx_v_det;
@@ -2418,7 +2418,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __Pyx_RefNannySetupContext("is_ccw", 0);
   __Pyx_TraceCall("is_ccw", __pyx_f[0], 18, 0, __PYX_ERR(0, 18, __pyx_L1_error));
 
-  /* "cython_geometry.pyx":20
+  /* "konquer/geometry/cython/cython_geometry.pyx":20
  * cdef bint is_ccw(double[:] A, double[:] B, double[:] C):
  *     cdef double[2] CA
  *     CA[0] = A[0] - C[0]             # <<<<<<<<<<<<<<
@@ -2429,7 +2429,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __pyx_t_2 = 0;
   (__pyx_v_CA[0]) = ((*((double *) ( /* dim=0 */ (__pyx_v_A.data + __pyx_t_1 * __pyx_v_A.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_C.data + __pyx_t_2 * __pyx_v_C.strides[0]) ))));
 
-  /* "cython_geometry.pyx":21
+  /* "konquer/geometry/cython/cython_geometry.pyx":21
  *     cdef double[2] CA
  *     CA[0] = A[0] - C[0]
  *     CA[1] = A[1] - C[1]             # <<<<<<<<<<<<<<
@@ -2440,7 +2440,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __pyx_t_1 = 1;
   (__pyx_v_CA[1]) = ((*((double *) ( /* dim=0 */ (__pyx_v_A.data + __pyx_t_2 * __pyx_v_A.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_C.data + __pyx_t_1 * __pyx_v_C.strides[0]) ))));
 
-  /* "cython_geometry.pyx":23
+  /* "konquer/geometry/cython/cython_geometry.pyx":23
  *     CA[1] = A[1] - C[1]
  * 
  *     cdef double[2] CB = [B[0] - C[0], B[1] - C[1]]             # <<<<<<<<<<<<<<
@@ -2455,7 +2455,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __pyx_t_5[1] = ((*((double *) ( /* dim=0 */ (__pyx_v_B.data + __pyx_t_3 * __pyx_v_B.strides[0]) ))) - (*((double *) ( /* dim=0 */ (__pyx_v_C.data + __pyx_t_4 * __pyx_v_C.strides[0]) ))));
   memcpy(&(__pyx_v_CB[0]), __pyx_t_5, sizeof(__pyx_v_CB[0]) * (2));
 
-  /* "cython_geometry.pyx":26
+  /* "konquer/geometry/cython/cython_geometry.pyx":26
  *     # cdef double[:] CB = np.array([B[0] - C[0], B[1] - C[1]])
  * 
  *     cdef double det = det_2d(CA, CB)             # <<<<<<<<<<<<<<
@@ -2484,7 +2484,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_t_6), PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_DECREF(((PyObject *)__pyx_t_6)); __pyx_t_6 = 0;
-  __pyx_v_det = __pyx_f_15cython_geometry_det_2d(__pyx_t_9, __pyx_t_10);
+  __pyx_v_det = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_det_2d(__pyx_t_9, __pyx_t_10);
   __PYX_XDEC_MEMVIEW(&__pyx_t_9, 1);
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
@@ -2492,7 +2492,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "cython_geometry.pyx":28
+  /* "konquer/geometry/cython/cython_geometry.pyx":28
  *     cdef double det = det_2d(CA, CB)
  *     #return 1 if det > 0 else 0 # Corner case det == 0 is not checked for yet
  *     return True if det > 0 else False # Corner case det == 0 is not checked for yet             # <<<<<<<<<<<<<<
@@ -2507,7 +2507,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __pyx_r = __pyx_t_11;
   goto __pyx_L0;
 
-  /* "cython_geometry.pyx":18
+  /* "konquer/geometry/cython/cython_geometry.pyx":18
  * @boundscheck(False)
  * @wraparound(False)
  * cdef bint is_ccw(double[:] A, double[:] B, double[:] C):             # <<<<<<<<<<<<<<
@@ -2522,7 +2522,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   __Pyx_XDECREF(__pyx_t_8);
   __PYX_XDEC_MEMVIEW(&__pyx_t_9, 1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_10, 1);
-  __Pyx_WriteUnraisable("cython_geometry.is_ccw", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.is_ccw", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_TraceReturn(Py_None, 0);
@@ -2530,7 +2530,7 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
   return __pyx_r;
 }
 
-/* "cython_geometry.pyx":34
+/* "konquer/geometry/cython/cython_geometry.pyx":34
  * @boundscheck(False)
  * @wraparound(False)
  * cpdef bint segments_intersect(double[:] A, double[:] B, double[:] C, double[:] D):             # <<<<<<<<<<<<<<
@@ -2538,8 +2538,8 @@ static int __pyx_f_15cython_geometry_is_ccw(__Pyx_memviewslice __pyx_v_A, __Pyx_
  *         return False
  */
 
-static PyObject *__pyx_pw_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_o1;
   int __pyx_v_o2;
   int __pyx_v_o3;
@@ -2560,7 +2560,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __Pyx_RefNannySetupContext("segments_intersect", 0);
   __Pyx_TraceCall("segments_intersect", __pyx_f[0], 34, 0, __PYX_ERR(0, 34, __pyx_L1_error));
 
-  /* "cython_geometry.pyx":35
+  /* "konquer/geometry/cython/cython_geometry.pyx":35
  * @wraparound(False)
  * cpdef bint segments_intersect(double[:] A, double[:] B, double[:] C, double[:] D):
  *     if max(A[0], B[0]) < min(C[0], D[0]):             # <<<<<<<<<<<<<<
@@ -2588,7 +2588,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __pyx_t_6 = ((__pyx_t_4 < __pyx_t_5) != 0);
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":36
+    /* "konquer/geometry/cython/cython_geometry.pyx":36
  * cpdef bint segments_intersect(double[:] A, double[:] B, double[:] C, double[:] D):
  *     if max(A[0], B[0]) < min(C[0], D[0]):
  *         return False             # <<<<<<<<<<<<<<
@@ -2598,7 +2598,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":35
+    /* "konquer/geometry/cython/cython_geometry.pyx":35
  * @wraparound(False)
  * cpdef bint segments_intersect(double[:] A, double[:] B, double[:] C, double[:] D):
  *     if max(A[0], B[0]) < min(C[0], D[0]):             # <<<<<<<<<<<<<<
@@ -2607,7 +2607,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
  */
   }
 
-  /* "cython_geometry.pyx":37
+  /* "konquer/geometry/cython/cython_geometry.pyx":37
  *     if max(A[0], B[0]) < min(C[0], D[0]):
  *         return False
  *     elif min(A[0], B[0]) > max(C[0], D[0]):             # <<<<<<<<<<<<<<
@@ -2635,7 +2635,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __pyx_t_6 = ((__pyx_t_2 > __pyx_t_3) != 0);
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":38
+    /* "konquer/geometry/cython/cython_geometry.pyx":38
  *         return False
  *     elif min(A[0], B[0]) > max(C[0], D[0]):
  *         return False             # <<<<<<<<<<<<<<
@@ -2645,7 +2645,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":37
+    /* "konquer/geometry/cython/cython_geometry.pyx":37
  *     if max(A[0], B[0]) < min(C[0], D[0]):
  *         return False
  *     elif min(A[0], B[0]) > max(C[0], D[0]):             # <<<<<<<<<<<<<<
@@ -2654,7 +2654,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
  */
   }
 
-  /* "cython_geometry.pyx":39
+  /* "konquer/geometry/cython/cython_geometry.pyx":39
  *     elif min(A[0], B[0]) > max(C[0], D[0]):
  *         return False
  *     elif max(A[1], B[1]) < min(C[1], D[1]):             # <<<<<<<<<<<<<<
@@ -2682,7 +2682,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __pyx_t_6 = ((__pyx_t_5 < __pyx_t_4) != 0);
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":40
+    /* "konquer/geometry/cython/cython_geometry.pyx":40
  *         return False
  *     elif max(A[1], B[1]) < min(C[1], D[1]):
  *         return False             # <<<<<<<<<<<<<<
@@ -2692,7 +2692,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":39
+    /* "konquer/geometry/cython/cython_geometry.pyx":39
  *     elif min(A[0], B[0]) > max(C[0], D[0]):
  *         return False
  *     elif max(A[1], B[1]) < min(C[1], D[1]):             # <<<<<<<<<<<<<<
@@ -2701,7 +2701,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
  */
   }
 
-  /* "cython_geometry.pyx":41
+  /* "konquer/geometry/cython/cython_geometry.pyx":41
  *     elif max(A[1], B[1]) < min(C[1], D[1]):
  *         return False
  *     elif min(A[1], B[1]) > max(C[1], D[1]):             # <<<<<<<<<<<<<<
@@ -2729,7 +2729,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __pyx_t_6 = ((__pyx_t_3 > __pyx_t_2) != 0);
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":42
+    /* "konquer/geometry/cython/cython_geometry.pyx":42
  *         return False
  *     elif min(A[1], B[1]) > max(C[1], D[1]):
  *         return False             # <<<<<<<<<<<<<<
@@ -2739,7 +2739,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":41
+    /* "konquer/geometry/cython/cython_geometry.pyx":41
  *     elif max(A[1], B[1]) < min(C[1], D[1]):
  *         return False
  *     elif min(A[1], B[1]) > max(C[1], D[1]):             # <<<<<<<<<<<<<<
@@ -2748,43 +2748,43 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
  */
   }
 
-  /* "cython_geometry.pyx":44
+  /* "konquer/geometry/cython/cython_geometry.pyx":44
  *         return False
  * 
  *     cdef bint o1 = is_ccw(A, B, C)             # <<<<<<<<<<<<<<
  *     cdef bint o2 = is_ccw(A, B, D)
  *     cdef bint o3 = is_ccw(C, D, A)
  */
-  __pyx_v_o1 = __pyx_f_15cython_geometry_is_ccw(__pyx_v_A, __pyx_v_B, __pyx_v_C);
+  __pyx_v_o1 = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__pyx_v_A, __pyx_v_B, __pyx_v_C);
 
-  /* "cython_geometry.pyx":45
+  /* "konquer/geometry/cython/cython_geometry.pyx":45
  * 
  *     cdef bint o1 = is_ccw(A, B, C)
  *     cdef bint o2 = is_ccw(A, B, D)             # <<<<<<<<<<<<<<
  *     cdef bint o3 = is_ccw(C, D, A)
  *     cdef bint o4 = is_ccw(C, D, B)
  */
-  __pyx_v_o2 = __pyx_f_15cython_geometry_is_ccw(__pyx_v_A, __pyx_v_B, __pyx_v_D);
+  __pyx_v_o2 = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__pyx_v_A, __pyx_v_B, __pyx_v_D);
 
-  /* "cython_geometry.pyx":46
+  /* "konquer/geometry/cython/cython_geometry.pyx":46
  *     cdef bint o1 = is_ccw(A, B, C)
  *     cdef bint o2 = is_ccw(A, B, D)
  *     cdef bint o3 = is_ccw(C, D, A)             # <<<<<<<<<<<<<<
  *     cdef bint o4 = is_ccw(C, D, B)
  * 
  */
-  __pyx_v_o3 = __pyx_f_15cython_geometry_is_ccw(__pyx_v_C, __pyx_v_D, __pyx_v_A);
+  __pyx_v_o3 = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__pyx_v_C, __pyx_v_D, __pyx_v_A);
 
-  /* "cython_geometry.pyx":47
+  /* "konquer/geometry/cython/cython_geometry.pyx":47
  *     cdef bint o2 = is_ccw(A, B, D)
  *     cdef bint o3 = is_ccw(C, D, A)
  *     cdef bint o4 = is_ccw(C, D, B)             # <<<<<<<<<<<<<<
  * 
  *     if o1 != o2 and o3 != o4:
  */
-  __pyx_v_o4 = __pyx_f_15cython_geometry_is_ccw(__pyx_v_C, __pyx_v_D, __pyx_v_B);
+  __pyx_v_o4 = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_ccw(__pyx_v_C, __pyx_v_D, __pyx_v_B);
 
-  /* "cython_geometry.pyx":49
+  /* "konquer/geometry/cython/cython_geometry.pyx":49
  *     cdef bint o4 = is_ccw(C, D, B)
  * 
  *     if o1 != o2 and o3 != o4:             # <<<<<<<<<<<<<<
@@ -2802,7 +2802,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
   __pyx_L5_bool_binop_done:;
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":50
+    /* "konquer/geometry/cython/cython_geometry.pyx":50
  * 
  *     if o1 != o2 and o3 != o4:
  *         return True             # <<<<<<<<<<<<<<
@@ -2812,7 +2812,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":49
+    /* "konquer/geometry/cython/cython_geometry.pyx":49
  *     cdef bint o4 = is_ccw(C, D, B)
  * 
  *     if o1 != o2 and o3 != o4:             # <<<<<<<<<<<<<<
@@ -2821,7 +2821,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
  */
   }
 
-  /* "cython_geometry.pyx":53
+  /* "konquer/geometry/cython/cython_geometry.pyx":53
  * 
  *     else:  # ignoring colinear cases for the moment
  *         return False             # <<<<<<<<<<<<<<
@@ -2833,7 +2833,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
     goto __pyx_L0;
   }
 
-  /* "cython_geometry.pyx":34
+  /* "konquer/geometry/cython/cython_geometry.pyx":34
  * @boundscheck(False)
  * @wraparound(False)
  * cpdef bint segments_intersect(double[:] A, double[:] B, double[:] C, double[:] D):             # <<<<<<<<<<<<<<
@@ -2843,7 +2843,7 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_TraceReturn(Py_None, 0);
@@ -2852,8 +2852,8 @@ static int __pyx_f_15cython_geometry_segments_intersect(__Pyx_memviewslice __pyx
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_1segments_intersect(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_A = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_B = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_C = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -2926,18 +2926,18 @@ static PyObject *__pyx_pw_15cython_geometry_1segments_intersect(PyObject *__pyx_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("segments_intersect", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 34, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("konquer.geometry.cython.cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_15cython_geometry_segments_intersect(__pyx_self, __pyx_v_A, __pyx_v_B, __pyx_v_C, __pyx_v_D);
+  __pyx_r = __pyx_pf_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(__pyx_self, __pyx_v_A, __pyx_v_B, __pyx_v_C, __pyx_v_D);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D) {
+static PyObject *__pyx_pf_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_A, __Pyx_memviewslice __pyx_v_B, __Pyx_memviewslice __pyx_v_C, __Pyx_memviewslice __pyx_v_D) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -2952,7 +2952,7 @@ static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyO
   if (unlikely(!__pyx_v_B.memview)) { __Pyx_RaiseUnboundLocalError("B"); __PYX_ERR(0, 34, __pyx_L1_error) }
   if (unlikely(!__pyx_v_C.memview)) { __Pyx_RaiseUnboundLocalError("C"); __PYX_ERR(0, 34, __pyx_L1_error) }
   if (unlikely(!__pyx_v_D.memview)) { __Pyx_RaiseUnboundLocalError("D"); __PYX_ERR(0, 34, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_f_15cython_geometry_segments_intersect(__pyx_v_A, __pyx_v_B, __pyx_v_C, __pyx_v_D, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_f_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(__pyx_v_A, __pyx_v_B, __pyx_v_C, __pyx_v_D, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2961,7 +2961,7 @@ static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyO
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("konquer.geometry.cython.cython_geometry.segments_intersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_A, 1);
@@ -2974,7 +2974,7 @@ static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "cython_geometry.pyx":59
+/* "konquer/geometry/cython/cython_geometry.pyx":59
  * @boundscheck(False)
  * @wraparound(False)
  * cdef bint is_point_in_polygon(double[:] P, double[:] R, double[:,:] polygon, double ray_length=10000000):             # <<<<<<<<<<<<<<
@@ -2982,7 +2982,7 @@ static PyObject *__pyx_pf_15cython_geometry_segments_intersect(CYTHON_UNUSED PyO
  *     # cdef double[:] R = np.array([P[0] + ray_length, P[1]])
  */
 
-static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __pyx_v_P, __Pyx_memviewslice __pyx_v_R, __Pyx_memviewslice __pyx_v_polygon, struct __pyx_opt_args_15cython_geometry_is_point_in_polygon *__pyx_optional_args) {
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __pyx_v_P, __Pyx_memviewslice __pyx_v_R, __Pyx_memviewslice __pyx_v_polygon, struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon *__pyx_optional_args) {
   int __pyx_v_n_vertices;
   int __pyx_v_cnt;
   int __pyx_v_i;
@@ -3003,7 +3003,7 @@ static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __py
   if (__pyx_optional_args) {
   }
 
-  /* "cython_geometry.pyx":60
+  /* "konquer/geometry/cython/cython_geometry.pyx":60
  * @wraparound(False)
  * cdef bint is_point_in_polygon(double[:] P, double[:] R, double[:,:] polygon, double ray_length=10000000):
  *     cdef int n_vertices = polygon.shape[0]             # <<<<<<<<<<<<<<
@@ -3012,7 +3012,7 @@ static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __py
  */
   __pyx_v_n_vertices = (__pyx_v_polygon.shape[0]);
 
-  /* "cython_geometry.pyx":64
+  /* "konquer/geometry/cython/cython_geometry.pyx":64
  *     # cdef double[2] R = (P[0] + ray_length, P[1])
  * 
  *     cdef int cnt = 0             # <<<<<<<<<<<<<<
@@ -3021,7 +3021,7 @@ static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __py
  */
   __pyx_v_cnt = 0;
 
-  /* "cython_geometry.pyx":66
+  /* "konquer/geometry/cython/cython_geometry.pyx":66
  *     cdef int cnt = 0
  *     cdef int i
  *     for i in range(n_vertices - 1):             # <<<<<<<<<<<<<<
@@ -3033,7 +3033,7 @@ static int __pyx_f_15cython_geometry_is_point_in_polygon(__Pyx_memviewslice __py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "cython_geometry.pyx":67
+    /* "konquer/geometry/cython/cython_geometry.pyx":67
  *     cdef int i
  *     for i in range(n_vertices - 1):
  *         if segments_intersect(P, R, polygon[i], polygon[i+1]):             # <<<<<<<<<<<<<<
@@ -3066,7 +3066,7 @@ __pyx_t_5.shape[0] = __pyx_v_polygon.shape[1];
 __pyx_t_5.strides[0] = __pyx_v_polygon.strides[1];
     __pyx_t_5.suboffsets[0] = -1;
 
-__pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, __pyx_t_4, __pyx_t_5, 0) != 0);
+__pyx_t_6 = (__pyx_f_7konquer_8geometry_6cython_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, __pyx_t_4, __pyx_t_5, 0) != 0);
     __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
     __pyx_t_4.memview = NULL;
     __pyx_t_4.data = NULL;
@@ -3075,7 +3075,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
     __pyx_t_5.data = NULL;
     if (__pyx_t_6) {
 
-      /* "cython_geometry.pyx":68
+      /* "konquer/geometry/cython/cython_geometry.pyx":68
  *     for i in range(n_vertices - 1):
  *         if segments_intersect(P, R, polygon[i], polygon[i+1]):
  *             cnt += 1             # <<<<<<<<<<<<<<
@@ -3084,7 +3084,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
  */
       __pyx_v_cnt = (__pyx_v_cnt + 1);
 
-      /* "cython_geometry.pyx":67
+      /* "konquer/geometry/cython/cython_geometry.pyx":67
  *     cdef int i
  *     for i in range(n_vertices - 1):
  *         if segments_intersect(P, R, polygon[i], polygon[i+1]):             # <<<<<<<<<<<<<<
@@ -3094,7 +3094,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
     }
   }
 
-  /* "cython_geometry.pyx":70
+  /* "konquer/geometry/cython/cython_geometry.pyx":70
  *             cnt += 1
  * 
  *     if cnt%2 == 0:             # <<<<<<<<<<<<<<
@@ -3104,7 +3104,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
   __pyx_t_6 = ((__Pyx_mod_long(__pyx_v_cnt, 2) == 0) != 0);
   if (__pyx_t_6) {
 
-    /* "cython_geometry.pyx":71
+    /* "konquer/geometry/cython/cython_geometry.pyx":71
  * 
  *     if cnt%2 == 0:
  *         return False             # <<<<<<<<<<<<<<
@@ -3114,7 +3114,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cython_geometry.pyx":70
+    /* "konquer/geometry/cython/cython_geometry.pyx":70
  *             cnt += 1
  * 
  *     if cnt%2 == 0:             # <<<<<<<<<<<<<<
@@ -3123,7 +3123,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
  */
   }
 
-  /* "cython_geometry.pyx":73
+  /* "konquer/geometry/cython/cython_geometry.pyx":73
  *         return False
  *     else:
  *         return True             # <<<<<<<<<<<<<<
@@ -3135,7 +3135,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
     goto __pyx_L0;
   }
 
-  /* "cython_geometry.pyx":59
+  /* "konquer/geometry/cython/cython_geometry.pyx":59
  * @boundscheck(False)
  * @wraparound(False)
  * cdef bint is_point_in_polygon(double[:] P, double[:] R, double[:,:] polygon, double ray_length=10000000):             # <<<<<<<<<<<<<<
@@ -3147,7 +3147,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
   __pyx_L1_error:;
   __PYX_XDEC_MEMVIEW(&__pyx_t_4, 1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_WriteUnraisable("cython_geometry.is_point_in_polygon", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.is_point_in_polygon", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_TraceReturn(Py_None, 0);
@@ -3155,7 +3155,7 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
   return __pyx_r;
 }
 
-/* "cython_geometry.pyx":78
+/* "konquer/geometry/cython/cython_geometry.pyx":78
  * @boundscheck(False)
  * @wraparound(False)
  * cpdef int assign_points_to_polygons(double[:,:] points, list polygons, long[:] points_conn_polygons, double[:,:] polygon_bboxes):             # <<<<<<<<<<<<<<
@@ -3163,8 +3163,8 @@ __pyx_t_6 = (__pyx_f_15cython_geometry_segments_intersect(__pyx_v_P, __pyx_v_R, 
  *     cdef int i
  */
 
-static PyObject *__pyx_pw_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_n_polys;
   int __pyx_v_i;
   int __pyx_v_n_points;
@@ -3183,7 +3183,7 @@ static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslic
   __Pyx_RefNannySetupContext("assign_points_to_polygons", 0);
   __Pyx_TraceCall("assign_points_to_polygons", __pyx_f[0], 78, 0, __PYX_ERR(0, 78, __pyx_L1_error));
 
-  /* "cython_geometry.pyx":79
+  /* "konquer/geometry/cython/cython_geometry.pyx":79
  * @wraparound(False)
  * cpdef int assign_points_to_polygons(double[:,:] points, list polygons, long[:] points_conn_polygons, double[:,:] polygon_bboxes):
  *     cdef int n_polys = len(polygons)             # <<<<<<<<<<<<<<
@@ -3197,7 +3197,7 @@ static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslic
   __pyx_t_1 = PyList_GET_SIZE(__pyx_v_polygons); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 79, __pyx_L1_error)
   __pyx_v_n_polys = __pyx_t_1;
 
-  /* "cython_geometry.pyx":81
+  /* "konquer/geometry/cython/cython_geometry.pyx":81
  *     cdef int n_polys = len(polygons)
  *     cdef int i
  *     cdef int n_points = points.shape[0]             # <<<<<<<<<<<<<<
@@ -3206,7 +3206,7 @@ static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslic
  */
   __pyx_v_n_points = (__pyx_v_points.shape[0]);
 
-  /* "cython_geometry.pyx":83
+  /* "konquer/geometry/cython/cython_geometry.pyx":83
  *     cdef int n_points = points.shape[0]
  * 
  *     for i in range(n_points):             # <<<<<<<<<<<<<<
@@ -3218,7 +3218,7 @@ static int __pyx_f_15cython_geometry_assign_points_to_polygons(__Pyx_memviewslic
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "cython_geometry.pyx":84
+    /* "konquer/geometry/cython/cython_geometry.pyx":84
  * 
  *     for i in range(n_points):
  *         points_conn_polygons[i] = assign_point_to_polygon(points[i], polygons, n_polys, polygon_bboxes)             # <<<<<<<<<<<<<<
@@ -3239,13 +3239,13 @@ __pyx_t_5.strides[0] = __pyx_v_points.strides[1];
     __pyx_t_5.suboffsets[0] = -1;
 
 __pyx_t_6 = __pyx_v_i;
-    *((long *) ( /* dim=0 */ (__pyx_v_points_conn_polygons.data + __pyx_t_6 * __pyx_v_points_conn_polygons.strides[0]) )) = __pyx_f_15cython_geometry_assign_point_to_polygon(__pyx_t_5, __pyx_v_polygons, __pyx_v_n_polys, __pyx_v_polygon_bboxes, NULL);
+    *((long *) ( /* dim=0 */ (__pyx_v_points_conn_polygons.data + __pyx_t_6 * __pyx_v_points_conn_polygons.strides[0]) )) = __pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon(__pyx_t_5, __pyx_v_polygons, __pyx_v_n_polys, __pyx_v_polygon_bboxes, NULL);
     __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
     __pyx_t_5.memview = NULL;
     __pyx_t_5.data = NULL;
   }
 
-  /* "cython_geometry.pyx":86
+  /* "konquer/geometry/cython/cython_geometry.pyx":86
  *         points_conn_polygons[i] = assign_point_to_polygon(points[i], polygons, n_polys, polygon_bboxes)
  * 
  *     return 1             # <<<<<<<<<<<<<<
@@ -3255,7 +3255,7 @@ __pyx_t_6 = __pyx_v_i;
   __pyx_r = 1;
   goto __pyx_L0;
 
-  /* "cython_geometry.pyx":78
+  /* "konquer/geometry/cython/cython_geometry.pyx":78
  * @boundscheck(False)
  * @wraparound(False)
  * cpdef int assign_points_to_polygons(double[:,:] points, list polygons, long[:] points_conn_polygons, double[:,:] polygon_bboxes):             # <<<<<<<<<<<<<<
@@ -3266,7 +3266,7 @@ __pyx_t_6 = __pyx_v_i;
   /* function exit code */
   __pyx_L1_error:;
   __PYX_XDEC_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_WriteUnraisable("cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_TraceReturn(Py_None, 0);
@@ -3275,8 +3275,8 @@ __pyx_t_6 = __pyx_v_i;
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_3assign_points_to_polygons(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_points = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_v_polygons = 0;
   __Pyx_memviewslice __pyx_v_points_conn_polygons = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -3349,12 +3349,12 @@ static PyObject *__pyx_pw_15cython_geometry_3assign_points_to_polygons(PyObject 
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("assign_points_to_polygons", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 78, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("konquer.geometry.cython.cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_polygons), (&PyList_Type), 1, "polygons", 1))) __PYX_ERR(0, 78, __pyx_L1_error)
-  __pyx_r = __pyx_pf_15cython_geometry_2assign_points_to_polygons(__pyx_self, __pyx_v_points, __pyx_v_polygons, __pyx_v_points_conn_polygons, __pyx_v_polygon_bboxes);
+  __pyx_r = __pyx_pf_7konquer_8geometry_6cython_15cython_geometry_2assign_points_to_polygons(__pyx_self, __pyx_v_points, __pyx_v_polygons, __pyx_v_points_conn_polygons, __pyx_v_polygon_bboxes);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3365,7 +3365,7 @@ static PyObject *__pyx_pw_15cython_geometry_3assign_points_to_polygons(PyObject 
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes) {
+static PyObject *__pyx_pf_7konquer_8geometry_6cython_15cython_geometry_2assign_points_to_polygons(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_points, PyObject *__pyx_v_polygons, __Pyx_memviewslice __pyx_v_points_conn_polygons, __Pyx_memviewslice __pyx_v_polygon_bboxes) {
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -3379,7 +3379,7 @@ static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UN
   if (unlikely(!__pyx_v_points.memview)) { __Pyx_RaiseUnboundLocalError("points"); __PYX_ERR(0, 78, __pyx_L1_error) }
   if (unlikely(!__pyx_v_points_conn_polygons.memview)) { __Pyx_RaiseUnboundLocalError("points_conn_polygons"); __PYX_ERR(0, 78, __pyx_L1_error) }
   if (unlikely(!__pyx_v_polygon_bboxes.memview)) { __Pyx_RaiseUnboundLocalError("polygon_bboxes"); __PYX_ERR(0, 78, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_15cython_geometry_assign_points_to_polygons(__pyx_v_points, __pyx_v_polygons, __pyx_v_points_conn_polygons, __pyx_v_polygon_bboxes, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_points_to_polygons(__pyx_v_points, __pyx_v_polygons, __pyx_v_points_conn_polygons, __pyx_v_polygon_bboxes, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3388,7 +3388,7 @@ static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UN
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("konquer.geometry.cython.cython_geometry.assign_points_to_polygons", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_points, 1);
@@ -3400,7 +3400,7 @@ static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UN
   return __pyx_r;
 }
 
-/* "cython_geometry.pyx":91
+/* "konquer/geometry/cython/cython_geometry.pyx":91
  * @boundscheck(False)
  * @wraparound(False)
  * cdef int assign_point_to_polygon(double[:] P, list polygons, int n_polys, double[:,:] polygon_bboxes, double ray_length=10000000):             # <<<<<<<<<<<<<<
@@ -3408,7 +3408,7 @@ static PyObject *__pyx_pf_15cython_geometry_2assign_points_to_polygons(CYTHON_UN
  *     cdef double[:] R = np.array([P[0] + ray_length, P[1]])
  */
 
-static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice __pyx_v_P, PyObject *__pyx_v_polygons, int __pyx_v_n_polys, __Pyx_memviewslice __pyx_v_polygon_bboxes, struct __pyx_opt_args_15cython_geometry_assign_point_to_polygon *__pyx_optional_args) {
+static int __pyx_f_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice __pyx_v_P, PyObject *__pyx_v_polygons, int __pyx_v_n_polys, __Pyx_memviewslice __pyx_v_polygon_bboxes, struct __pyx_opt_args_7konquer_8geometry_6cython_15cython_geometry_assign_point_to_polygon *__pyx_optional_args) {
   double __pyx_v_ray_length = ((double)10000000.0);
   int __pyx_v_i;
   __Pyx_memviewslice __pyx_v_R = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -3444,7 +3444,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
     }
   }
 
-  /* "cython_geometry.pyx":93
+  /* "konquer/geometry/cython/cython_geometry.pyx":93
  * cdef int assign_point_to_polygon(double[:] P, list polygons, int n_polys, double[:,:] polygon_bboxes, double ray_length=10000000):
  *     cdef int i
  *     cdef double[:] R = np.array([P[0] + ray_length, P[1]])             # <<<<<<<<<<<<<<
@@ -3492,7 +3492,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "cython_geometry.pyx":95
+  /* "konquer/geometry/cython/cython_geometry.pyx":95
  *     cdef double[:] R = np.array([P[0] + ray_length, P[1]])
  * 
  *     for i in range(n_polys):             # <<<<<<<<<<<<<<
@@ -3504,7 +3504,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
   for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
     __pyx_v_i = __pyx_t_10;
 
-    /* "cython_geometry.pyx":96
+    /* "konquer/geometry/cython/cython_geometry.pyx":96
  * 
  *     for i in range(n_polys):
  *         if polygon_bboxes[i, 0] < P[0] < polygon_bboxes[i, 1] and polygon_bboxes[i, 2] < P[1] < polygon_bboxes[i, 3]:             # <<<<<<<<<<<<<<
@@ -3542,7 +3542,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_11) {
 
-      /* "cython_geometry.pyx":97
+      /* "konquer/geometry/cython/cython_geometry.pyx":97
  *     for i in range(n_polys):
  *         if polygon_bboxes[i, 0] < P[0] < polygon_bboxes[i, 1] and polygon_bboxes[i, 2] < P[1] < polygon_bboxes[i, 3]:
  *             if is_point_in_polygon(P, R, polygons[i]):             # <<<<<<<<<<<<<<
@@ -3554,13 +3554,13 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
         __PYX_ERR(0, 97, __pyx_L1_error)
       }
       __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(PyList_GET_ITEM(__pyx_v_polygons, __pyx_v_i), PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 97, __pyx_L1_error)
-      __pyx_t_11 = (__pyx_f_15cython_geometry_is_point_in_polygon(__pyx_v_P, __pyx_v_R, __pyx_t_18, NULL) != 0);
+      __pyx_t_11 = (__pyx_f_7konquer_8geometry_6cython_15cython_geometry_is_point_in_polygon(__pyx_v_P, __pyx_v_R, __pyx_t_18, NULL) != 0);
       __PYX_XDEC_MEMVIEW(&__pyx_t_18, 1);
       __pyx_t_18.memview = NULL;
       __pyx_t_18.data = NULL;
       if (__pyx_t_11) {
 
-        /* "cython_geometry.pyx":98
+        /* "konquer/geometry/cython/cython_geometry.pyx":98
  *         if polygon_bboxes[i, 0] < P[0] < polygon_bboxes[i, 1] and polygon_bboxes[i, 2] < P[1] < polygon_bboxes[i, 3]:
  *             if is_point_in_polygon(P, R, polygons[i]):
  *                 return i             # <<<<<<<<<<<<<<
@@ -3570,7 +3570,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
         __pyx_r = __pyx_v_i;
         goto __pyx_L0;
 
-        /* "cython_geometry.pyx":97
+        /* "konquer/geometry/cython/cython_geometry.pyx":97
  *     for i in range(n_polys):
  *         if polygon_bboxes[i, 0] < P[0] < polygon_bboxes[i, 1] and polygon_bboxes[i, 2] < P[1] < polygon_bboxes[i, 3]:
  *             if is_point_in_polygon(P, R, polygons[i]):             # <<<<<<<<<<<<<<
@@ -3579,7 +3579,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
  */
       }
 
-      /* "cython_geometry.pyx":96
+      /* "konquer/geometry/cython/cython_geometry.pyx":96
  * 
  *     for i in range(n_polys):
  *         if polygon_bboxes[i, 0] < P[0] < polygon_bboxes[i, 1] and polygon_bboxes[i, 2] < P[1] < polygon_bboxes[i, 3]:             # <<<<<<<<<<<<<<
@@ -3589,7 +3589,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
     }
   }
 
-  /* "cython_geometry.pyx":100
+  /* "konquer/geometry/cython/cython_geometry.pyx":100
  *                 return i
  * 
  *     return -1             # <<<<<<<<<<<<<<
@@ -3597,7 +3597,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
   __pyx_r = -1;
   goto __pyx_L0;
 
-  /* "cython_geometry.pyx":91
+  /* "konquer/geometry/cython/cython_geometry.pyx":91
  * @boundscheck(False)
  * @wraparound(False)
  * cdef int assign_point_to_polygon(double[:] P, list polygons, int n_polys, double[:,:] polygon_bboxes, double ray_length=10000000):             # <<<<<<<<<<<<<<
@@ -3614,7 +3614,7 @@ static int __pyx_f_15cython_geometry_assign_point_to_polygon(__Pyx_memviewslice 
   __Pyx_XDECREF(__pyx_t_6);
   __PYX_XDEC_MEMVIEW(&__pyx_t_7, 1);
   __PYX_XDEC_MEMVIEW(&__pyx_t_18, 1);
-  __Pyx_WriteUnraisable("cython_geometry.assign_point_to_polygon", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("konquer.geometry.cython.cython_geometry.assign_point_to_polygon", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __PYX_XDEC_MEMVIEW(&__pyx_v_R, 1);
@@ -17519,7 +17519,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cython_geometry.array", /*tp_name*/
+  "konquer.geometry.cython.cython_geometry.array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -17638,7 +17638,7 @@ static PyMethodDef __pyx_methods_Enum[] = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cython_geometry.Enum", /*tp_name*/
+  "konquer.geometry.cython.cython_geometry.Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -17899,7 +17899,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cython_geometry.memoryview", /*tp_name*/
+  "konquer.geometry.cython.cython_geometry.memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -18037,7 +18037,7 @@ static struct PyGetSetDef __pyx_getsets__memoryviewslice[] = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cython_geometry._memoryviewslice", /*tp_name*/
+  "konquer.geometry.cython.cython_geometry._memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -18113,8 +18113,8 @@ static PyTypeObject __pyx_type___pyx_memoryviewslice = {
 };
 
 static PyMethodDef __pyx_methods[] = {
-  {"segments_intersect", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_15cython_geometry_1segments_intersect, METH_VARARGS|METH_KEYWORDS, 0},
-  {"assign_points_to_polygons", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_15cython_geometry_3assign_points_to_polygons, METH_VARARGS|METH_KEYWORDS, 0},
+  {"segments_intersect", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_1segments_intersect, METH_VARARGS|METH_KEYWORDS, 0},
+  {"assign_points_to_polygons", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7konquer_8geometry_6cython_15cython_geometry_3assign_points_to_polygons, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -18861,14 +18861,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_cython_geometry) {
+  if (__pyx_module_is_main_konquer__geometry__cython__cython_geometry) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "cython_geometry")) {
-      if (unlikely(PyDict_SetItemString(modules, "cython_geometry", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "konquer.geometry.cython.cython_geometry")) {
+      if (unlikely(PyDict_SetItemString(modules, "konquer.geometry.cython.cython_geometry", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -18890,19 +18890,19 @@ if (!__Pyx_RefNanny) {
   #endif
   __Pyx_TraceCall("__Pyx_PyMODINIT_FUNC PyInit_cython_geometry(void)", __pyx_f[0], 1, 0, __PYX_ERR(0, 1, __pyx_L1_error));
 
-  /* "cython_geometry.pyx":3
+  /* "konquer/geometry/cython/cython_geometry.pyx":3
  * # cython: profile=True
  * from cython cimport boundscheck, wraparound
  * import numpy as np             # <<<<<<<<<<<<<<
  * from  libc.math cimport fmin, fmax
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cython_geometry.pyx":1
+  /* "konquer/geometry/cython/cython_geometry.pyx":1
  * # cython: profile=True             # <<<<<<<<<<<<<<
  * from cython cimport boundscheck, wraparound
  * import numpy as np
@@ -19073,11 +19073,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init cython_geometry", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init konquer.geometry.cython.cython_geometry", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init cython_geometry");
+    PyErr_SetString(PyExc_ImportError, "init konquer.geometry.cython.cython_geometry");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

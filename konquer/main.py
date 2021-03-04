@@ -4,7 +4,7 @@
 '''
 
 Created:    February 2020
-Modified:   October 2020
+Modified:   March 2021
 
 @author:    Pascal Wiese
 
@@ -28,18 +28,16 @@ import time
 import numpy as np
 from scipy.spatial import KDTree
 
-from kontrollquerschnitt.inout import import_mesh
-from kontrollquerschnitt.inout import import_kqs_from_shape
-from kontrollquerschnitt.inout import write_wel
-from kontrollquerschnitt.functions import run_kq
-from kontrollquerschnitt.plotting import plot_kqs
+from classes.mesh import Mesh
+from classes.crosssection import CrossSectionCollection
+from analysis.flowcalc import run_kq
+from visualization.plotting import plot_kqs
 
-
-# TODO: improve speed (cython)
-# TODO: documentation (docstrings)
-# TODO: qgis implementation
-# TODO: Check other TODOs in code
-# TODO: Split functions.py in geometry.py and kq-related functions
+# from kontrollquerschnitt.inout import import_mesh
+# from kontrollquerschnitt.inout import import_kqs_from_shape
+# from kontrollquerschnitt.inout import write_wel
+# from kontrollquerschnitt.functions import run_kq
+# from kontrollquerschnitt.plotting import plot_kqs
 
 
 def main():
@@ -52,20 +50,23 @@ def main():
         sys.exit("\nKeine Ergebnisdaten angegeben. Programmabbruch.")
 
     print("\nImportiere Eingangsdaten...")
-    kqs_dict = import_kqs_from_shape(path_dict['shp'], field_name=field_name)
-    mesh = import_mesh(path_dict['mesh'])
+    cs_collection = CrossSectionCollection()
+    cs_collection.import_kqs_from_shape(path_dict['shp'], field_name=field_name)
 
+    mesh = Mesh()
+    mesh.import_mesh(path_dict['mesh'])
+    
     print("\nBaue raeumliche Suchstruktur...")
     t0 = time.time()
     kdtree = KDTree(mesh.nodes_array[:, 0:2])
     print("-> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
-    print("\nErmittle {} Kontrollquerschnitte...".format(len(kqs_dict)))
-    run_kq(mesh, kqs_dict, path_dict, kdtree, params)
+    print("\nErmittle {} Kontrollquerschnitte...".format(len(cs_collection.kqs_dict)))
+    run_kq(mesh, cs_collection.kqs_dict, path_dict, kdtree, params)
 
     if params['plot'] or params['save']:
         print("\nPlotte Kontrollquerschnitte...")
-        plot_kqs(kqs_dict, plot=params['plot'],
+        plot_kqs(cs_collection.kqs_dict, plot=params['plot'],
                  saveplots=params['save'],
                  folder=os.path.dirname(path_dict['shp']),
                  prefix=params['prefix'])
@@ -76,9 +77,8 @@ def main():
             os.path.dirname(path_dict['shp']), params['prefix'] + "_" +
             os.path.basename(path_dict['shp'])[:-4] + ".wel")
 
-    print("\nSchreibe Kontrollquerschnitte als {}...".format(
-        os.path.basename(path_wel)))
-    write_wel(path_wel, kqs_dict)
+    print("\nSchreibe Kontrollquerschnitte als {}...".format(os.path.basename(path_wel)))
+    cs_collection.write_wel(path_wel)
 
     dt = time.time() - t0_prog
     print("\nProgramm nach {:7.2f} Minuten beendet.".format(dt/60))

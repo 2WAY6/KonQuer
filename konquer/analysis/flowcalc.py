@@ -4,10 +4,11 @@ import time
 
 import numpy as np
 
-from .geometry import dist_2d, line_intersection, point_in_element
-from .plotting import plot_ortho_flows
-# import cython_geometry as cy_geo
-from .cython_geometry import segments_intersect as cy_segments_intersect
+from geometry.topology import dist_2d, line_intersection, point_in_element
+from visualization.plotting import plot_ortho_flows
+from geometry.cython_geometry import segments_intersect as cy_segments_intersect
+
+# from .cython_geometry import segments_intersect as cy_segments_intersect
 
 
 def run_kq(mesh, kqs_dict, path_dict, kdtree, params, plot=False):
