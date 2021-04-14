@@ -24,7 +24,7 @@ def run_kq(mesh, kqs_dict, path_dict, kdtree, params, plot=False):
     print("- Ermittle Element von Anfangs- und Endpunkte der "
           "Kontrollquerschnitte...")
     t0 = time.time()
-    calc_kq_elmt_intersections(mesh, kqs_dict, kdtree)
+    in_elmt = calc_kq_elmt_intersections(mesh, kqs_dict, kdtree)
     print("  -> Nach {} Sekunden beendet.".format(round(time.time() - t0, 2)))
 
     if plot:
@@ -136,32 +136,25 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
     kq_ortho_dir = (kq_dir[1], -1*kq_dir[0])
     kq_ortho_mag = sqrt(kq_ortho_dir[0]**2 + kq_ortho_dir[1]**2)
 
-    try:
+    if len(kq.elmt_ids) == 2:
         elmt1 = mesh.elements[kq.elmt_ids[0]]
         elmt2 = mesh.elements[kq.elmt_ids[1]]
 
-    except IndexError:  # TODO: Check, when that would occur again
-        print("IndexError:")
-        print("elements[kq_elmt_ids[0]]")
-        print("elements[kq_elmt_ids[1]]")
-        print("kq_elmt_ids: {}".format(kq.elmt_ids))
-        sys.exit("Programmabbruch")
+        flows1 = np.array([node_flow_vectors[nid] for nid in elmt1])
+        flows2 = np.array([node_flow_vectors[nid] for nid in elmt2])
 
-    flows1 = np.array([node_flow_vectors[nid] for nid in elmt1])
-    flows2 = np.array([node_flow_vectors[nid] for nid in elmt2])
+        nodes1 = mesh.nodes_array[elmt1]
+        nodes2 = mesh.nodes_array[elmt2]
 
-    nodes1 = mesh.nodes_array[elmt1]
-    nodes2 = mesh.nodes_array[elmt2]
+        flow_start = get_flow_at_position(kq_pts[0], nodes1, flows1)
+        flow_end = get_flow_at_position(kq_pts[1], nodes2, flows2)
 
-    flow_start = get_flow_at_position(kq_pts[0], nodes1, flows1)
-    flow_end = get_flow_at_position(kq_pts[1], nodes2, flows2)
+        ortho_flow_start = (flow_start[0] * kq_ortho_dir[0] +
+                            flow_start[1] * kq_ortho_dir[1]) / kq_ortho_mag
+        ortho_flow_end = (flow_end[0] * kq_ortho_dir[0] +
+                        flow_end[1] * kq_ortho_dir[1]) / kq_ortho_mag
 
-    ortho_flow_start = (flow_start[0] * kq_ortho_dir[0] +
-                        flow_start[1] * kq_ortho_dir[1]) / kq_ortho_mag
-    ortho_flow_end = (flow_end[0] * kq_ortho_dir[0] +
-                      flow_end[1] * kq_ortho_dir[1]) / kq_ortho_mag
-
-    ortho_flows.append(ortho_flow_start)
+        ortho_flows.append(ortho_flow_start)
 
     for i, I in enumerate(kq.intersections):
         nid1 = mesh.edges[kq.edge_ids[i]][0]
@@ -179,9 +172,12 @@ def calc_flow_for_timestep(mesh, kqs_dict, kq_id, node_flow_vectors, ts,
                       flow[1] * kq_ortho_dir[1]) / kq_ortho_mag
         ortho_flows.append(ortho_flow)
 
-    ortho_flows.append(ortho_flow_end)
+    if len(kq.elmt_ids) == 2:
+        ortho_flows.append(ortho_flow_end)
 
-    intersections = [kq_pts[0]] + kq.intersections + [kq_pts[1]]
+        intersections = [kq_pts[0]] + kq.intersections + [kq_pts[1]]
+    else:
+        intersections = kq.intersections
 
     kq_flow = 0
     for i, pnt in enumerate(intersections[:-1]):
@@ -276,7 +272,9 @@ def calc_kq_elmt_intersections(mesh, kqs_dict, kdtree):
         if len(kqs_dict[kq_id].elmt_ids) != 2:
             print("Start- oder Endpunkt des Kontrollquerschnitts {} liegen "
                   "nicht in einem Element.".format(kq_id))
-            sys.exit("Programmabbruch")
+            return False
+            # sys.exit("Programmabbruch")
+        return True
 
 
 def calc_kq_edge_intersections(mesh, kqs_dict, kdtree):
