@@ -37,7 +37,7 @@ def plot_ortho_flows(intersections, ortho_flows, ts, summe, divisor=0.1):
         e_y.append(y1)
         ax.plot([x0, x1], [y0, y1], 'r-')
 
-        ax.text(x1, y1, round(flow, 3))
+        ax.text(x1, y1, round(flow, 6))
 
     ax.plot(e_x, e_y, 'r-')
     ax.set_title(f"Timestep {ts}\n{summe} m3/s")
@@ -71,17 +71,17 @@ def plot_kqs(kqs_dict, plot=True, saveplots=False,
         fig, ax1 = plt.subplots()
         color = 'blue'
         ax1.plot(timesteps_hours, kq.flows, color=color)
-        ax1.text(max_ts, max_flow, round(max_flow, 2), color='blue')
+        ax1.text(max_ts, max_flow, round(max_flow, 6), color='blue')
         ax1.set_title("Kontrollquerschnitt: {}".format(kqid))
         ax1.set_xlabel("Zeitschritt [h]")
-        ax1.set_ylabel("Durchfluss [m³/s]", color=color)
+        ax1.set_ylabel("Durchfluss [m3/s]", color=color)
         ax1.tick_params(axis='y', labelcolor=color)
         ax1.grid(True)
 
         ax2 = ax1.twinx()
         color = 'red'
         ax2.plot(timesteps_hours, vols, color=color)
-        ax2.set_ylabel("Volumen [m³]", color=color)
+        ax2.set_ylabel("Volumen [m3]", color=color)
         ax2.tick_params(axis='y', labelcolor=color)
 
         fig.tight_layout()
