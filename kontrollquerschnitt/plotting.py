@@ -59,9 +59,16 @@ def plot_kqs(kqs_dict, plot=True, saveplots=False,
                   (kq.flows[i] + kq.flows[i+1]) / 2  # Trapezintegration
             vols.append(vol + vols[-1])
 
+        max_vol = 0
+        max_iv = 0
+        for i, v in enumerate(vols):
+            if v > max_vol:
+                max_iv = i
+                max_vol = v
+        max_ts_v = timesteps_hours[-1]
+
         max_flow = 0
         max_i = 0
-
         for i, f in enumerate(kq.flows):
             if f > max_flow:
                 max_i = i
@@ -81,6 +88,7 @@ def plot_kqs(kqs_dict, plot=True, saveplots=False,
         ax2 = ax1.twinx()
         color = 'red'
         ax2.plot(timesteps_hours, vols, color=color)
+        ax2.text(max_ts_v, max_vol, round(max_vol, 6), color='red')
         ax2.set_ylabel("Volumen [m3]", color=color)
         ax2.tick_params(axis='y', labelcolor=color)
 
